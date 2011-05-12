@@ -1,5 +1,5 @@
 function cellBoundingShow(tBlob, ID, fig)
-ColorSet = varycolor(30);
+ColorSet = varycolor(100);
 
 figure(fig);
 hold on;

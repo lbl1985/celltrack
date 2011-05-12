@@ -1,5 +1,6 @@
 % datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking';
-vcm;    id = 7;
+vcm;    id = 6;
+record = 1;
 videoName = {'3tubes_010flow_g10.avi', '3tubes_020flow_g20.avi', ...
     '3tubes_020flow_g20_focusbottom.avi', '18mm_2x_e3_015speed_focusbottom2.avi', ...
     '18mm_2x_e3_015speed_focustop.avi', '18mm_2x_e3_020speed.avi', ...
@@ -23,7 +24,7 @@ PixelThreshold = 3000;
 areaThreshold = 100;
 DB = {};
 ID = 1;
-record = 0;
+
 
 if record
     moviefile = [videoName{id}(1:end - 4) '_blobTracking.avi']; framerate = 5;

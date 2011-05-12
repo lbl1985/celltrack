@@ -60,7 +60,7 @@ switch module
     case 'del'
         i = varargin{1};
         tDB = DB{i};
-        tDB.timeIDX = [];
+        tDB.timeIDX = -inf;
         tDB.BoundingBOx = [];
         tDB.Centroid = [-inf -inf];
         tDB.Area = [-inf];
@@ -131,11 +131,17 @@ switch module
         
         showBeforeDB = DB(ind);
         
-        centroidsBefore = structField2Vector(showBeforeDB, 'Centroid', 'Matrix', 'cellDatabase');
-        ID = findingNearestCentroid(Centroid, centroidsBefore, movTh);
-        
-        % Get back the ID into the original DB index.
-        ID = ind(ID);
+        if ~isempty(showBeforeDB)
+            centroidsBefore = structField2Vector(showBeforeDB, 'Centroid', 'Matrix', 'cellDatabase');
+            ID = findingNearestCentroid(Centroid, centroidsBefore, movTh);
+            
+            if ID ~= 0
+                % Get back the ID into the original DB index.
+                ID = ind(ID);
+            end
+        else
+            ID = 0;
+        end
         
 %         for i = nobj : -1 : 1
 %             % Comparing entry information
