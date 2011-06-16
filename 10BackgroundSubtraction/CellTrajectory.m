@@ -4,11 +4,17 @@ workingPath = pwd;
 % id = 4; 
 % number of duplicate
 % nd = 6;
-datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking';
-videoName = {'3tubes_010flow_g10.avi', '3tubes_020flow_g20.avi', ...
-    '3tubes_020flow_g20_focusbottom.avi', '18mm_2x_e3_015speed_focusbottom2.avi', ...
-    '18mm_2x_e3_015speed_focustop.avi', '18mm_2x_e3_020speed.avi', ...
-'18mm_2x_e4_015speed.avi', '18mm_2x_e4_020speed.avi', 'cells_g15_5x_test1.avi', 'cells_g15_5x_test3.avi'};
+% datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking';
+% videoName = {'3tubes_010flow_g10.avi', '3tubes_020flow_g20.avi', ...
+%     '3tubes_020flow_g20_focusbottom.avi', '18mm_2x_e3_015speed_focusbottom2.avi', ...
+%     '18mm_2x_e3_015speed_focustop.avi', '18mm_2x_e3_020speed.avi', ...
+% '18mm_2x_e4_015speed.avi', '18mm_2x_e4_020speed.avi', 'cells_g15_5x_test1.avi', 'cells_g15_5x_test3.avi'};
+
+datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking\vivo';
+datapath = folderUniverse(datapath, 'PC');
+
+[datapath videoName n] = rfdatabase(datapath, [], '.avi');
+
 cd(datapath);   
 movie2frames_cellTracking(videoName{id}, nd);
 cd(workingPath);
@@ -66,45 +72,45 @@ close all;
 
 %% Batch Run
 % load 3tubes_010flow_g10_bgSub.mat
-id = 4;
-load ([videoName{id}(1:end-4) '_bgSub.mat']);
-nframe = endFrame / nd;   nSeg = zeros(nframe, 1);
-PixelThreshold = 2000;
-record = 0;
-if record
-    moviefile = [videoName{id}(1:end - 4) '_FT1.avi']; framerate = 5;
-    aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
-end
-for t = 1 : nframe
-% for t = 58
-    figure(1); I = fg(:, :, t); imshow(I, 'border', 'tight');
-    Ifilt = medfilt2(I); Ifilt = medfilt2(Ifilt);
-    figure(2); imshow(Ifilt, 'border', 'tight');
-    STATS = regionprops(Ifilt>0);
-    nSeg(t) = length(STATS);
-    if nSeg(t) ~= 0
-        a = structField2Vector(STATS, 'Area');
-        if nSeg(t) < 10 && sum(a) < PixelThreshold;
-            display(['Frame ' num2str(t)]);
-            ColorSet = varycolor(nSeg(t));
-            for i = 1 : length(STATS)
-                figure(2); hold on;
-                rectangle('Position', STATS(i).BoundingBox, 'EdgeColor', ColorSet(i, :), 'LineWidth', 4);
-                hold off;
-            end
-        end
-    end
-    if record
-        frame = getframe(gcf);
-        aviobj = addframe(aviobj, frame);
-    end
-end
-
-if record
-    aviobj = close(aviobj);
-end
-
-figure(3); plot(1:nframe, nSeg);
+% id = 4;
+% load ([videoName{id}(1:end-4) '_bgSub.mat']);
+% nframe = endFrame / nd;   nSeg = zeros(nframe, 1);
+% PixelThreshold = 2000;
+% record = 0;
+% if record
+%     moviefile = [videoName{id}(1:end - 4) '_FT1.avi']; framerate = 5;
+%     aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
+% end
+% for t = 1 : nframe
+% % for t = 58
+%     figure(1); I = fg(:, :, t); imshow(I, 'border', 'tight');
+%     Ifilt = medfilt2(I); Ifilt = medfilt2(Ifilt);
+%     figure(2); imshow(Ifilt, 'border', 'tight');
+%     STATS = regionprops(Ifilt>0);
+%     nSeg(t) = length(STATS);
+%     if nSeg(t) ~= 0
+%         a = structField2Vector(STATS, 'Area');
+%         if nSeg(t) < 10 && sum(a) < PixelThreshold;
+%             display(['Frame ' num2str(t)]);
+%             ColorSet = varycolor(nSeg(t));
+%             for i = 1 : length(STATS)
+%                 figure(2); hold on;
+%                 rectangle('Position', STATS(i).BoundingBox, 'EdgeColor', ColorSet(i, :), 'LineWidth', 4);
+%                 hold off;
+%             end
+%         end
+%     end
+%     if record
+%         frame = getframe(gcf);
+%         aviobj = addframe(aviobj, frame);
+%     end
+% end
+% 
+% if record
+%     aviobj = close(aviobj);
+% end
+% 
+% figure(3); plot(1:nframe, nSeg);
 
 %% Seperate Run
 % nframe = 250;   nSeg = zeros(nframe, 1);
