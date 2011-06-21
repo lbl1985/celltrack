@@ -1,4 +1,6 @@
-nd = 4;
-for id = 1 : 30
-    CellTrajectory(id, nd);
+nd = 4; 
+% method = 'MoG';
+method = 'MEAN';
+for id = 8
+    CellTrajectory(id, nd, method);
 end
