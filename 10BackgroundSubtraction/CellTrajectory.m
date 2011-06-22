@@ -84,7 +84,7 @@ switch method
         %% MEAN Background Subtraction
         startFrame = 1;
         endFrame = nframes;
-        fg = zeros(frameHeight, frameWidth, 3, endFrame - startFrame + 1);
+        fg = uint8(zeros(frameHeight, frameWidth, 3, endFrame - startFrame + 1));
         
 %         img_color = imread([srcdirImage filenamesImg{1}]);
         video_color = [];
@@ -97,12 +97,16 @@ switch method
         meanBackGround = mean(video_color, nd+1);
         for t = startFrame : endFrame            
             img_color = imread([srcdirImg filenamesImg{t}]);            
-            fg(:, :, :, t - startFrame + 1) = double(img_color) - meanBackGround;
+            fg(:, :, :, t - startFrame + 1) = uint8(double(img_color) - meanBackGround);
             figure(1); 
             subplot(1, 2, 1); imshow(uint8(img_color), 'border', 'tight');
             subplot(1, 2, 2); imshow(uint8(fg(:, :, :, t - startFrame + 1)), 'border', 'tight');
             pause(1/11);
         end
+        
+        resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\data';
+        save(fullfile(resVivoDataPath, [filename 'Mean_bgSub.mat']), 'fg');
+        close all;
 end
         %% Batch Run
         % load 3tubes_010flow_g10_bgSub.mat
