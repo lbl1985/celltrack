@@ -84,7 +84,7 @@ switch method
         %% MEAN Background Subtraction
         startFrame = 1;
         endFrame = nframes;
-        fg = zeros(frameHeight, frameWidth, endFrame - startFrame + 1);
+        fg = zeros(frameHeight, frameWidth, 3, endFrame - startFrame + 1);
         
 %         img_color = imread([srcdirImage filenamesImg{1}]);
         video_color = [];
@@ -94,13 +94,14 @@ switch method
             video_color = cat(nd + 1, video_color, img_color);            
         end
         
-        meanBackGround = mean(video_color, nd);
+        meanBackGround = mean(video_color, nd+1);
         for t = startFrame : endFrame            
-            img_color = imread([srcdirImage filenamesImg{t}]);            
-            fg(:, :, t - startFrame + 1) = img_color - meanBackGround;
+            img_color = imread([srcdirImg filenamesImg{t}]);            
+            fg(:, :, :, t - startFrame + 1) = double(img_color) - meanBackGround;
             figure(1); 
-            subplot(1, 2, 1); imshow(img_color, 'border', 'tight');
-            subplot(1, 2, 2); imshow(fg(:, :, t - startFrame + 1), 'border', 'tight');
+            subplot(1, 2, 1); imshow(uint8(img_color), 'border', 'tight');
+            subplot(1, 2, 2); imshow(uint8(fg(:, :, :, t - startFrame + 1)), 'border', 'tight');
+            pause(1/11);
         end
 end
         %% Batch Run
