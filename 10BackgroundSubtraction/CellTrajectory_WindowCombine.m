@@ -3,7 +3,12 @@
 % sequence as background.
 % ----> Need to add another switch between MoG and Mean method.
 % Binlong Li    21 June 2011    12:04PM
-function CellTrajectory(id, nd, method)
+% Inherited from CellTrajectory
+% This function is mainly for windowCombine for Cell Tracking project.
+% only different is using method window_combine of function
+% movie2frames_cellTracking.
+% Binlong Li    22 June 2011 01:35PM
+function CellTrajectory_WindowCombine(id, nd, method)
 %% Saving movie into frames
 workingPath = pwd;
 % id = 4;
@@ -15,13 +20,16 @@ workingPath = pwd;
 %     '18mm_2x_e3_015speed_focustop.avi', '18mm_2x_e3_020speed.avi', ...
 % '18mm_2x_e4_015speed.avi', '18mm_2x_e4_020speed.avi', 'cells_g15_5x_test1.avi', 'cells_g15_5x_test3.avi'};
 
+% Parameter Setting Section
 datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking\vivo';
 datapath = folderUniverse(datapath, 'PC');
+% window Size
+winSize = 3;
 
 [datapath videoName n] = rfdatabase(datapath, [], '.avi');
 
 cd(datapath);
-movie2frames_cellTracking(videoName{id}, nd);
+Camera_dir = movie2frames_cellTracking(videoName{id}, nd, 'window_combine', winSize);
 cd(workingPath);
 
 % Image Processing Preparations
@@ -32,7 +40,7 @@ kResizeRatio = 1;
 
 % CameraId = 1;
 % Camera_dir = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking\3tubes_010flow_g10';
-Camera_dir = fullfile(datapath, videoName{id}(1:end-4));
+% Camera_dir = fullfile(datapath, videoName{id}(1:end-4));
 
 [srcdirImg filenamesImg nframes] = rfdatabase(Camera_dir, [], '.jpg');
 filename = filenamesImg{1}(1:end - 7);
@@ -105,7 +113,7 @@ switch method
         end
         
         resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\data';
-        save(fullfile(resVivoDataPath, [filename 'WindowCOmbine_Mean_bgSub.mat']), 'fg');
+        save(fullfile(resVivoDataPath, [filename 'Mean_bgSub.mat']), 'fg');
         close all;
 end
         %% Batch Run
