@@ -47,9 +47,21 @@ switch method
     case 'MoG'
         
         %% MoG Background Subtraction
+        debugRecord = 1; 
+        T = 300;
+        fAlphaT = 1/T;    fTb = 3 * 3;
+        videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_trial3'];
+        resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\window_combine_debug';
+        
+        if debugRecord
+            moviefile = fullfile(resVivoDataPath, [videoName{id}(1:end - 4) videoPostName]); 
+            framerate = 5; aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
+        end
+        
         startFrame = 1;
         endFrame = nframes;
         fg = zeros(frameHeight, frameWidth, endFrame - startFrame + 1);
+        lastLoopFrameNum = (endFrame - startFrame + 1) * (nd -1) / nd;
         for t=startFrame:endFrame
             
             % get the nextframe
@@ -60,7 +72,7 @@ switch method
             if t==startFrame
                 % initialize background subtraction
                 h=mexCvBSLib(img);%Initialize
-                mexCvBSLib(img,h,[1/300 4*4 0 0.5]);%set parameters
+                mexCvBSLib(img,h,[fAlphaT fTb 0 0.5]);%set parameters
             end
             
             fgMask=mexCvBSLib(img,h);
@@ -72,12 +84,24 @@ switch method
             title(sprintf('Frame:%d',t));
             fg(:, :, t - startFrame + 1) = fgMask;
             
+            % only record the last loop
+            if debugRecord && t > lastLoopFrameNum
+                frame = getframe(gcf);
+                aviobj = addframe(aviobj, frame);
+            end
+            
         end
         
         % save(['Camera' num2str(CameraId) 'bgSub.mat'], 'fg');
         fg = fg(:, :, endFrame - endFrame/nd + 1 : endFrame);
-        save([filename 'bgSub.mat'], 'fg');
+        save(fullfile(resVivoDataPath, [filename videoPostName '_bgSub.mat']), 'fg');
+%         save([filename 'bgSub.mat'], 'fg');
         mexCvBSLib(h);
+        
+        if debugRecord
+            aviobj = close(aviobj);
+        end
+        
         close all;
         
     case 'MEAN'

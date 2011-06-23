@@ -1,5 +1,6 @@
 close all; 
-method = 'MEAN';
+% method = 'MEAN';
+method = 'MoG';
 isSliding = 'OFF';
 switch isSliding
     case 'OFF'
