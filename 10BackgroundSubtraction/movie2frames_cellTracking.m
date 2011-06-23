@@ -10,6 +10,9 @@
 % 
 % In order to connect with function CellTrajectory, need to output
 % savingDir
+% Binlong Li    22 June 2011    
+% Combine several image with mean operation.
+% Binlong LI    23 June 2011    12:14PM
 function varargout = movie2frames_cellTracking(filename, nd, varargin)
 % Change the movie into .jpg frames.
 % The save file will be saved in the path with movie name
@@ -50,12 +53,16 @@ elseif nargin == 4
             ndim = ndims(I);
             for k = 0 : nd - 1
                 for t = 1 : nFrame -(winSize - 1)
-                    Icombine = [];
+%                     Icombine = [];
+                    Icombine = uint8(zeros(size(I)));
                     for i = 0 : winSize - 1
                         I = movie.frames(t + i).cdata;
-                        Icombine = cat(ndim + 1, Icombine, I);
+                        Icombine = Icombine + I;
                     end
-                    Imean = uint8(mean(Icombine, ndim + 1));
+%                     Imean = uint8(mean(Icombine, ndim + 1));
+                    % If the values combine exceed 255, it will
+                    % automatically switched back to 255.
+                    Imean = uint8(Icombine);
                     imwrite(Imean, [filename(1:end-4) '_' int2str2(t + k * nFrame,nDigtal) '.jpg']);
                 end
             end

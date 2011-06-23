@@ -82,6 +82,17 @@ switch method
         
     case 'MEAN'
         %% MEAN Background Subtraction
+        % Parameter Setting Section
+        threshold = 10;
+        debugRecord = 1; 
+        videoPostName = ['_windowCombineDebug2_threshold' num2str(threshold)];
+        resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\window_combine_debug';
+        
+        if debugRecord
+            moviefile = fullfile(resVivoDataPath, [videoName{id}(1:end - 4) videoPostName]); 
+            framerate = 5; aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
+        end
+        
         startFrame = 1;
         endFrame = nframes;
         fg = uint8(zeros(frameHeight, frameWidth, 3, endFrame - startFrame + 1));
@@ -97,15 +108,25 @@ switch method
         meanBackGround = mean(video_color, nd+1);
         for t = startFrame : endFrame            
             img_color = imread([srcdirImg filenamesImg{t}]);            
-            fg(:, :, :, t - startFrame + 1) = uint8(double(img_color) - meanBackGround);
+            tempfg = uint8(abs(double(img_color) - meanBackGround));
+            tempfg(tempfg>threshold) = 255;
+            fg(:, :, :, t - startFrame + 1) = tempfg;
             figure(1); 
-            subplot(1, 2, 1); imshow(uint8(img_color), 'border', 'tight');
-            subplot(1, 2, 2); imshow(uint8(fg(:, :, :, t - startFrame + 1)), 'border', 'tight');
+            subplot(1, 2, 1); imshow(uint8(img_color), 'border', 'tight');  
+            title(['Frame ' num2str(t)]);
+            subplot(1, 2, 2); imshow(fg(:, :, :, t - startFrame + 1), 'border', 'tight');
             pause(1/11);
+            if debugRecord
+                frame = getframe(gcf);
+                aviobj = addframe(aviobj, frame);
+            end
         end
         
-        resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\data';
-        save(fullfile(resVivoDataPath, [filename 'WindowCOmbine_Mean_bgSub.mat']), 'fg');
+        if debugRecord
+            aviobj = close(aviobj);
+        end
+        
+        save(fullfile(resVivoDataPath, [filename 'WindowCombine_Mean_bgSub.mat']), 'fg');
         close all;
 end
         %% Batch Run
