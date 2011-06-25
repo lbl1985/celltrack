@@ -35,4 +35,8 @@ end
 
 % Post Processing, median filter and close-opening operations.
 isVis = 1;  isSpec = 0;
-pPro_celltrack(fg, isVis, isSpec);
+fgVideo = pPro_celltrack(fg, isVis, isSpec);
+
+% Dynamics Checking Section
+degreeVideo = dynamicsVideo(fgVideo);
+
