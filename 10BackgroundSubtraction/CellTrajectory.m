@@ -8,6 +8,8 @@
 % As a sub-supporting function CellTrajectory need to adding output
 % opinions
 % Binlong Li    25 June 2011    07:49AM
+% Add output options about  original Image folder path and filenames
+% Binlong Li    25 June 2011    03:46PM
 function varargout = CellTrajectory(id, nd, method, varargin)
 %% Saving movie into frames
 workingPath = pwd;
@@ -100,7 +102,7 @@ switch method
         
         % save(['Camera' num2str(CameraId) 'bgSub.mat'], 'fg');
         fg = fg(:, :, endFrame - endFrame/nd + 1 : endFrame);
-        varargout{1} = fg;
+        varargout{1} = fg;  varargout{2} = srcdirImg; varargout{3} = filenamesImg;
 %         save(fullfile(resVivoDataPath, [filename videoPostName '_bgSub.mat']), 'fg');
 %         save([filename 'bgSub.mat'], 'fg');
         mexCvBSLib(h);
