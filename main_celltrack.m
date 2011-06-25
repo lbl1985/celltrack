@@ -1,3 +1,7 @@
+% Working Log:
+% main_celltrackin will be the general all-in-one console for the whole project. 
+% Adding output argument: fg for CellTrajectory Function.
+% Binlong Li    25 June 2011    07:51AM
 close all; 
 % method = 'MEAN';
 method = 'MoG';
@@ -10,8 +14,9 @@ switch isSliding
             nd = 1;
         end
         for id = 8
-            CellTrajectory(id, nd, method);
+            fg = CellTrajectory(id, nd, method);
         end
+        
     case 'ON'
         if strcmp(method, 'MoG')
             nd = 4;        
@@ -22,3 +27,6 @@ switch isSliding
             CellTrajectory_WindowCombine(id, nd, method);
         end
 end
+
+% Post Processing, median filter and close-opening operations.
+nframes = size(fg, ndims(fg));

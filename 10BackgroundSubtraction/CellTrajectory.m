@@ -3,7 +3,12 @@
 % sequence as background.
 % ----> Need to add another switch between MoG and Mean method.
 % Binlong Li    21 June 2011    12:04PM
-function CellTrajectory(id, nd, method)
+% Switch the project arichitecher, all the functions will be called from
+% function main_celltrack.m in the root folder.
+% As a sub-supporting function CellTrajectory need to adding output
+% opinions
+% Binlong Li    25 June 2011    07:49AM
+function varargout = CellTrajectory(id, nd, method)
 %% Saving movie into frames
 workingPath = pwd;
 % id = 4;
@@ -94,7 +99,8 @@ switch method
         
         % save(['Camera' num2str(CameraId) 'bgSub.mat'], 'fg');
         fg = fg(:, :, endFrame - endFrame/nd + 1 : endFrame);
-        save(fullfile(resVivoDataPath, [filename videoPostName '_bgSub.mat']), 'fg');
+        varargout{1} = fg;
+%         save(fullfile(resVivoDataPath, [filename videoPostName '_bgSub.mat']), 'fg');
 %         save([filename 'bgSub.mat'], 'fg');
         mexCvBSLib(h);
         
