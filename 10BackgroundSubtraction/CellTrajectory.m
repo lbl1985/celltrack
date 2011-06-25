@@ -8,7 +8,7 @@
 % As a sub-supporting function CellTrajectory need to adding output
 % opinions
 % Binlong Li    25 June 2011    07:49AM
-function varargout = CellTrajectory(id, nd, method)
+function varargout = CellTrajectory(id, nd, method, varargin)
 %% Saving movie into frames
 workingPath = pwd;
 % id = 4;
@@ -52,7 +52,8 @@ switch method
     case 'MoG'
         
         %% MoG Background Subtraction
-        debugRecord = 1; 
+        debugRecord = varin2out(varargin);
+%         debugRecord = 1; 
         T = 300;
         fAlphaT = 1/T;    fTb = 3 * 3;
         videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_trial3'];
