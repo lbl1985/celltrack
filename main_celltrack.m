@@ -10,7 +10,7 @@ method = 'MoG';
 isSliding = 'OFF';
 % Recording 
 debugRecord = 0;
-isVis = 1;
+
 switch isSliding
     case 'OFF'
         if strcmp(method, 'MoG')
@@ -34,4 +34,5 @@ switch isSliding
 end
 
 % Post Processing, median filter and close-opening operations.
-pPro_celltrack(fg, isVis);
+isVis = 1;  isSpec = 0;
+pPro_celltrack(fg, isVis, isSpec);
