@@ -29,5 +29,6 @@ end
 varargout{1} = resDegree;
 varargout{2} = combineImage;
 varargout{3} = vec;
+varargout{4} = STATS;
 
 

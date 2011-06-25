@@ -42,6 +42,7 @@ fgVideo = pPro_celltrack(fg, isVis, isSpec);
 
 % Result Visualization Section
 nframes = size(fg, ndims(fg));
+fig = figure(1);
 for t = 1 : nframes
     subplot(2, 3, 1); imread([srcdirImg filenamesImg{t}]);
     title(['Origin Frame ' num2str(t)]);
