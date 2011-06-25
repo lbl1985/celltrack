@@ -4,5 +4,9 @@ function varargout =  varin2out(varargin)
 n = length(varargin);
 for i = 1 : n
     temp = varargin{i};
-    varargout{i} = temp{1};
+    if iscell(temp) && length(temp) == 1
+        varargout{i} = temp{1};
+    else
+        varargout{i} = temp;
+    end
 end
