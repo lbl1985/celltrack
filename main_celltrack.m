@@ -43,6 +43,13 @@ fgVideo = pPro_celltrack(fg, isVis, isSpec);
 % Cell Number Gen Section
 cellID= cellIDGen(degreeVideo, STATSBatch);
 
-% Result Visualization Section
-ideaShow_celltrack('bkgd_with_dynamics', fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
+%% Result Visualization Section
+isRecord = 1;
+if ~isRecord
+    recordFileName = [];
+else
+    recordFileName = fullfile('C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\bkgd_with_dynamics', ...
+        '15_bkgd_with_dynamics_trial1.avi');
+end
+ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
     
