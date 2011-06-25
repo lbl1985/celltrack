@@ -19,7 +19,7 @@ switch isSliding
             nd = 1;
         end
         for id = 8
-            fg = CellTrajectory(id, nd, method, debugRecord);
+            [fg srcdirImg filenamesImg] = CellTrajectory(id, nd, method, debugRecord);
         end
         
     case 'ON'
@@ -40,3 +40,4 @@ fgVideo = pPro_celltrack(fg, isVis, isSpec);
 % Dynamics Checking Section
 degreeVideo = dynamicsVideo(fgVideo);
 
+% 
