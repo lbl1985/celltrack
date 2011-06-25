@@ -34,28 +34,15 @@ switch isSliding
 end
 
 % Post Processing, median filter and close-opening operations.
-isVis = 1;  isSpec = 0;
+isVis = 0;  isSpec = 0;
 fgVideo = pPro_celltrack(fg, isVis, isSpec);
 
 % Dynamics Checking Section
-[degreeVideo combineImage vecBatch] = dynamicsVideo(fgVideo);
+[degreeVideo combineImage vecBatch STATSBatch] = dynamicsVideo(fgVideo);
+
+% Cell Number Gen Section
+cellID= cellIDGen(degreeVideo, STATSBatch);
 
 % Result Visualization Section
-nframes = size(fg, ndims(fg));
-fig = figure(1);
-for t = 1 : nframes
-    subplot(2, 3, 1); imread([srcdirImg filenamesImg{t}]);
-    title(['Origin Frame ' num2str(t)]);
-    subplot(2, 3, 2); imshow(fg(:, :, t));
-    title('bkgd Sub Res');
-    subplot(2, 3, 3); imshow(fgVideo(:, :, t));
-    title('Median Filter Res');
-    subplot(2, 3, 4); imshow(combineImage(:, :, t));
-    title('Combine Images');
-    subplot(2, 3, 5); vec = vecBatch{t};
-    plot(vec(:, 1), vec(:, 2), 'ro');    axis([1 size(fg(:, :, 1), 2) 1 size(fg(:, :, 1), 1)]);
-    title('Region Centroids Locations');
-    subplot(2, 3, 6);
-end
-    
+ideaShow_celltrack('bkgd_with_dynamics', fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
     
