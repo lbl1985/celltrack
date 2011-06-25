@@ -1,4 +1,4 @@
-function pPro_celltrack(fg, isVis, isSpec)
+function varargout = pPro_celltrack(fg, isVis, isSpec)
 
 nframes = size(fg, ndims(fg));
 if isVis
@@ -17,6 +17,7 @@ if isVis
     display('fgVideo Visualization');
     visSubFun(fgVideo, isSpec);
 end
+varargout{1} = fgVideo;
 
 % closingVideo = logic(fgVideo);
 % se90 = strel('diamond', 3, 90);     se0 = strel('diamond', 3, 0);
