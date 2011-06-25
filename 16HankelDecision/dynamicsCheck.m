@@ -10,13 +10,13 @@ combineImage = sum(fg(:, :, k - 1 : k + 1), 3);
 combineImage = combineImage > 128;
 % figure(1); imshow(combineImage);
 STATS = regionprops(combineImage);
-resDegree = 0;
+resDegree = 0;  vector = 0;
 if length(STATS) > 1
-    vec = structField2Vector(STATS, 'Centroid');
+    vector = structField2Vector(STATS, 'Centroid');
 %     figure(2); plot(vec(:, 1), vec(:, 2), 'ro');    axis([1 size(fg(:, :, 1), 2) 1 size(fg(:, :, 1), 1)]);
-    nSec = size(vec, 1);
+    nSec = size(vector, 1);
     for degree = 1 : nSec
-        rsq = rsqComputing(vec, degree);
+        rsq = rsqComputing(vector, degree);
         if rsq > 0.97
             break;
         end
@@ -28,7 +28,7 @@ else
 end
 varargout{1} = resDegree;
 varargout{2} = combineImage;
-varargout{3} = vec;
+varargout{3} = vector;
 varargout{4} = STATS;
 
 
