@@ -38,6 +38,23 @@ isVis = 1;  isSpec = 0;
 fgVideo = pPro_celltrack(fg, isVis, isSpec);
 
 % Dynamics Checking Section
-degreeVideo = dynamicsVideo(fgVideo);
+[degreeVideo combineImage vecBatch] = dynamicsVideo(fgVideo);
 
-% 
+% Result Visualization Section
+nframes = size(fg, ndims(fg));
+for t = 1 : nframes
+    subplot(2, 3, 1); imread([srcdirImg filenamesImg{t}]);
+    title(['Origin Frame ' num2str(t)]);
+    subplot(2, 3, 2); imshow(fg(:, :, t));
+    title('bkgd Sub Res');
+    subplot(2, 3, 3); imshow(fgVideo(:, :, t));
+    title('Median Filter Res');
+    subplot(2, 3, 4); imshow(combineImage(:, :, t));
+    title('Combine Images');
+    subplot(2, 3, 5); vec = vecBatch{t};
+    plot(vec(:, 1), vec(:, 2), 'ro');    axis([1 size(fg(:, :, 1), 2) 1 size(fg(:, :, 1), 1)]);
+    title('Region Centroids Locations');
+    subplot(2, 3, 6);
+end
+    
+    
