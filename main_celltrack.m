@@ -3,6 +3,10 @@
 % Adding output argument: fg for CellTrajectory Function.
 % Binlong Li    25 June 2011    07:51AM
 
+% Pre-preparation Seciotn
+workingpath = pwd;
+addpath(genpath(pwd));
+
 % Parameter Setting Section
 close all; 
 % method = 'MEAN';
