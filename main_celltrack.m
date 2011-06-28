@@ -56,7 +56,7 @@ if ~isRecord
     recordFileName = [];
 else
     recordFileName = fullfile('C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\bkgd_with_dynamics', ...
-        '15_bkgd_with_dynamics_trial1.avi');
+        '15_bkgd_with_dynamics_trial3.avi');
 end
 ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
     
