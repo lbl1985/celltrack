@@ -18,6 +18,9 @@ switch isSliding
         else
             nd = 1;
         end
+        
+        % parameter setting section
+        
         for id = 8
             [fg srcdirImg filenamesImg] = CellTrajectory(id, nd, method, debugRecord);
         end
