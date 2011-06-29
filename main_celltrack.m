@@ -4,16 +4,19 @@
 % Binlong Li    25 June 2011    07:51AM
 
 % Pre-preparation Section
-workingpath = pwd;
+% extract the location for working main function
+close all; 
+workingpath = which('main_celltrack.m');
+workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
 addpath(genpath(pwd));
 
 % Parameter Setting Section
-close all; 
 % method = 'MEAN';
 method = 'MoG';
 isSliding = 'OFF';
 % Recording 
 debugRecord = 0;
+datapath = fullfile(workingpath, 'vivo');
 
 switch isSliding
     case 'OFF'
@@ -24,9 +27,12 @@ switch isSliding
         end
         
         % parameter setting section
-        
+        T = 300;            fTb = 3 * 3;
+        videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_reorg_trial1'];
+        resVivoDataPath = fullfile(workingpath, '\Results\vivo\window_combine_debug\');
+        filevar = [{datapath} {videoPostName} {resVivoDataPath}];
         for id = 8
-            [fg srcdirImg filenamesImg] = CellTrajectory(id, nd, method, debugRecord);
+            [fg srcdirImg filenamesImg] = CellTrajectory(id, nd, method, filevar, debugRecord, T, fTb);
         end
         
     case 'ON'
@@ -55,8 +61,8 @@ isRecord = 1;
 if ~isRecord
     recordFileName = [];
 else
-    recordFileName = fullfile('C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\bkgd_with_dynamics', ...
-        '15_bkgd_with_dynamics_trial3.avi');
+    recordFileName = fullfile(workingpath, '\Results\vivo\bkgd_with_dynamics', ...
+        '15_bkgd_with_dynamics_reorg_trial1.avi');
 end
 ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
     
