@@ -16,7 +16,7 @@ method = 'MoG';
 isSliding = 'OFF';
 % Recording 
 debugRecord = 0;
-datapath = fullfile(workingpath, 'vivo');
+datapath = fullfile(workingpath, '01database', 'vivo');
 
 switch isSliding
     case 'OFF'
@@ -28,9 +28,13 @@ switch isSliding
         
         % parameter setting section
         T = 300;            fTb = 3 * 3;
-        videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_reorg_trial1'];
+        % Video Background Subtraction Result .Mat data Name
+        videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_reorg_trial2'];
+        % Where to save the data before.
         resVivoDataPath = fullfile(workingpath, '\Results\vivo\window_combine_debug\');
         filevar = [{datapath} {videoPostName} {resVivoDataPath}];
+        
+        
         for id = 8
             [fg srcdirImg filenamesImg] = CellTrajectory(id, nd, method, filevar, debugRecord, T, fTb);
         end
@@ -61,8 +65,10 @@ isRecord = 1;
 if ~isRecord
     recordFileName = [];
 else
+    % If record, what is the name and location to save the video.
     recordFileName = fullfile(workingpath, '\Results\vivo\bkgd_with_dynamics', ...
-        '15_bkgd_with_dynamics_reorg_trial1.avi');
+        '15_bkgd_with_dynamics_reorg_trial3.avi');
 end
+%
 ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
     
