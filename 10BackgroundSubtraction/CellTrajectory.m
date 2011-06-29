@@ -10,7 +10,7 @@
 % Binlong Li    25 June 2011    07:49AM
 % Add output options about  original Image folder path and filenames
 % Binlong Li    25 June 2011    03:46PM
-function varargout = CellTrajectory(id, nd, method, varargin)
+function varargout = CellTrajectory(id, nd, method, filevar, varargin)
 %% Saving movie into frames
 workingPath = pwd;
 % id = 4;
@@ -22,7 +22,8 @@ workingPath = pwd;
 %     '18mm_2x_e3_015speed_focustop.avi', '18mm_2x_e3_020speed.avi', ...
 % '18mm_2x_e4_015speed.avi', '18mm_2x_e4_020speed.avi', 'cells_g15_5x_test1.avi', 'cells_g15_5x_test3.avi'};
 
-datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking\vivo';
+% datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking\vivo';
+[datapath videoPostName resVivoDataPath] = varin2out(filevar);
 % datapath = folderUniverse(datapath, 'PC');
 
 [datapath videoName n] = rfdatabase(datapath, [], '.avi');
@@ -54,12 +55,12 @@ switch method
     case 'MoG'
         
         %% MoG Background Subtraction
-        debugRecord = varin2out(varargin);
+        [debugRecord T fTb] = varin2out(varargin);
 %         debugRecord = 1; 
-        T = 300;
-        fAlphaT = 1/T;    fTb = 3 * 3;
-        videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_trial3'];
-        resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\window_combine_debug';
+%         T = 300;    fTb = 3 * 3;
+        fAlphaT = 1/T;    
+%         videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_trial3'];
+%         resVivoDataPath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\window_combine_debug';
         
         if debugRecord
             moviefile = fullfile(resVivoDataPath, [videoName{id}(1:end - 4) videoPostName]); 
