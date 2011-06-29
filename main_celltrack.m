@@ -66,7 +66,7 @@ if ~isRecord
     recordFileName = [];
 else
     % If record, what is the name and location to save the video.
-    recordFileName = fullfile(workingpath, '\Results\vivo\bkgd_with_dynamics', ...
+    recordFileName = fullfile(workingpath, '\Results', ...
         '15_bkgd_with_dynamics_reorg_trial3.avi');
 end
 %
