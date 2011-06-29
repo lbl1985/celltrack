@@ -3,12 +3,12 @@ function varargout = ideaShow_celltrack(varargin)
 method = varargin{1};
 switch method
     case 'bkgd_with_dynamics'
-        [isRecord moviefile] = varin2out(varargin{2:3});
+        [isRecord moviefile] = varin2out({varargin{2:3}});
         if isRecord
 %             moviefile = fullfile(resVivoDataPath, [videoName{id}(1:end - 4) videoPostName]); 
             framerate = 5; aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
         end
-        [fg srcdirImg filenamesImg fgVideo combineImage STATSBatch cellID] = varin2out(varargin{4:end});
+        [fg srcdirImg filenamesImg fgVideo combineImage STATSBatch cellID] = varin2out({varargin{4:end}});
         nframes = size(fg, ndims(fg));
         fig = figure(1);
         for t = 1 : nframes
