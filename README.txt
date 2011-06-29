@@ -2,16 +2,13 @@ Cell Track Project:
 
 Author: Binlong Li,     Stacey Markovic
 
-* Working Log: 
-** Changing log:
-*** Move main_celltrack.m into root folder. All functions will be called 
-    from this console...
+Requirement:
+1. Windows 64bit System
+2. OpenCV
+3. More than 4G memory
 
-** Bench Log:
-*** window_combine:     window sliding background trial branch
-**** Merge window_combine into master       Binlong     5:27PM  23 June 2011
-
-* Next Task:
-** DONE Combine several image without mean.
-Not working very well, need more thinking
-** TODO Post Closeing or Opening processing
+Instructions:
+1. Create folder vivo under .\01database    Output: .\01database\vivo\
+2. copy all the vivo videos into vivo folder, (total 30 videos).
+3. Create folder Results under current folder    Output: .\Results
+4. Run main_celltrack.m
