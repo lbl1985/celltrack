@@ -52,10 +52,10 @@ end
 
 % Post Processing, median filter and close-opening operations.
 isVis = 0;  isSpec = 0;
-fgVideo = pPro_celltrack(fg, isVis, isSpec);
+[fgVideo openClosingVideo] = pPro_celltrack(fg, isVis, isSpec);
 
 % Dynamics Checking Section
-[degreeVideo combineImage vecBatch STATSBatch] = dynamicsVideo(fgVideo);
+[degreeVideo combineImage vecBatch STATSBatch] = dynamicsVideo(openClosingVideo);
 
 % Cell Number Gen Section
 cellID= cellIDGen(degreeVideo, STATSBatch);
@@ -70,5 +70,5 @@ else
         '15_bkgd_with_dynamics_reorg_trial3.avi');
 end
 %
-ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, combineImage, STATSBatch, cellID);
+ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, openClosingVideo, combineImage, STATSBatch, cellID);
     
