@@ -26,8 +26,10 @@ switch method
             %     plot(vec(:, 1), vec(:, 2), 'ro');    axis([1 size(fg(:, :, 1), 2) 1 size(fg(:, :, 1), 1)]);
             %     title('Region Centroids Locations');
             subplot(2, 3, 6);   imshow(openClosingVideo(:, :, t));
-            if cellID(t) > 0
-                STATS = STATSBatch{t};
+            STATS = regionprops(openClosingVideo(:, :, t) > 0);
+            if cellID(t) > 0 && ~isempty(STATS)
+                
+%                 STATS = STATSBatch{t};
                 hold on;
                 for i = 1 : length(STATS)
                     tBlob = STATS(i);
