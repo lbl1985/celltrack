@@ -7,7 +7,7 @@ function fgOpenClosing = OpenClosingProcess(fgVideo)
 % Output:   After Processing Video
 % Binlong Li    12:58PM     30 June 2011
 nframes = size(fgVideo, 3);
-fgOpenClosing = unit8(zeros(size(fgVideo)));
+fgOpenClosing = uint8(zeros(size(fgVideo)));
 % parameters Setting Section
 se = strel('ball', 5, 5);
 for i = 1 : nframes
@@ -17,6 +17,6 @@ for i = 1 : nframes
     subplot(1, 3, 2); imshow(uint8(tfg_dilate)); title('fg dilate');
     tfg_erode = imerode(tfg_dilate, se);
     subplot(1, 3, 3); imshow(uint8(tfg_erode)); title('fg erode');
-    fgOpenClosing(:, :, i) = uint8(tfg_erod);
+    fgOpenClosing(:, :, i) = uint8(tfg_erode);
 end
     

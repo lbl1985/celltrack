@@ -29,9 +29,9 @@ switch isSliding
         % parameter setting section
         T = 300;            fTb = 3 * 3;
         % Video Background Subtraction Result .Mat data Name
-        videoPostName = ['windowCombineDebug_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_reorg_trial2'];
+        videoPostName = ['openClosing_MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_reorg_trial2'];
         % Where to save the data before.
-        resVivoDataPath = fullfile(workingpath, '\Results\vivo\window_combine_debug\');
+        resVivoDataPath = fullfile(workingpath, '\Results\vivo\openClosing\');
         filevar = [{datapath} {videoPostName} {resVivoDataPath}];
         
         
@@ -50,7 +50,7 @@ switch isSliding
         end
 end
 
-% Post Processing, median filter and close-opening operations.
+%% Post Processing, median filter and close-opening operations.
 isVis = 0;  isSpec = 0;
 [fgVideo openClosingVideo] = pPro_celltrack(fg, isVis, isSpec);
 
@@ -61,13 +61,13 @@ isVis = 0;  isSpec = 0;
 cellID= cellIDGen(degreeVideo, STATSBatch);
 
 %% Result Visualization Section
-isRecord = 1;
+isRecord = 0;
 if ~isRecord
     recordFileName = [];
 else
     % If record, what is the name and location to save the video.
-    recordFileName = fullfile(workingpath, '\Results', ...
-        '15_bkgd_with_dynamics_reorg_trial3.avi');
+    recordFileName = fullfile(workingpath, '\Results\vivo\openClosing\', ...
+        '15_openClosing_trial1.avi');
 end
 %
 ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, openClosingVideo, combineImage, STATSBatch, cellID);

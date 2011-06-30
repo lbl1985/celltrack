@@ -20,6 +20,8 @@ switch method
             title('Median Filter Res');
             subplot(2, 3, 4); imshow(combineImage(:, :, t));
             title('Combine Images');
+            subplot(2, 3, 5); imshow(openClosingVideo(:, :, t));
+            title('openClosing Images');
             %     subplot(2, 3, 5); vec = vecBatch{t};
             %     plot(vec(:, 1), vec(:, 2), 'ro');    axis([1 size(fg(:, :, 1), 2) 1 size(fg(:, :, 1), 1)]);
             %     title('Region Centroids Locations');

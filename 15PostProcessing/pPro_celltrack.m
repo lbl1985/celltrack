@@ -17,7 +17,11 @@ if isVis
     display('fgVideo Visualization');
     visSubFun(fgVideo, isSpec);
 end
+
+
+openClosingVideo = OpenClosingProcess(fgVideo);
 varargout{1} = fgVideo;
+varargout{2} = openClosingVideo;
 
 % closingVideo = logic(fgVideo);
 % se90 = strel('diamond', 3, 90);     se0 = strel('diamond', 3, 0);
