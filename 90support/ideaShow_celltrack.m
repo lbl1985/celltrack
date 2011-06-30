@@ -8,7 +8,7 @@ switch method
 %             moviefile = fullfile(resVivoDataPath, [videoName{id}(1:end - 4) videoPostName]); 
             framerate = 5; aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
         end
-        [fg srcdirImg filenamesImg fgVideo combineImage STATSBatch cellID] = varin2out({varargin{4:end}});
+        [fg srcdirImg filenamesImg fgVideo openClosingVideo combineImage STATSBatch cellID] = varin2out({varargin{4:end}});
         nframes = size(fg, ndims(fg));
         fig = figure(1);
         for t = 1 : nframes
@@ -23,7 +23,7 @@ switch method
             %     subplot(2, 3, 5); vec = vecBatch{t};
             %     plot(vec(:, 1), vec(:, 2), 'ro');    axis([1 size(fg(:, :, 1), 2) 1 size(fg(:, :, 1), 1)]);
             %     title('Region Centroids Locations');
-            subplot(2, 3, 6);   imshow(fgVideo(:, :, t));
+            subplot(2, 3, 6);   imshow(openClosingVideo(:, :, t));
             if cellID(t) > 0
                 STATS = STATSBatch{t};
                 hold on;
