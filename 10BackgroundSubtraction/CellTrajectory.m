@@ -114,6 +114,13 @@ switch method
         
         close all;
         
+    case 'SIAM'
+        mat  = @(x) reshape( x, frameHeight, frameWidth, nframes);
+        originalVideo = images2var(srcdirImg, filenamesImg);
+        fg = SIAM_bkgdSubtraction(originalVideo, frameHeight, frameWidth);
+        fg = mat(fg);
+        varargout{1} = fg;  varargout{2} = srcdirImg; varargout{3} = filenamesImg;
+        
     case 'MEAN'
         %% MEAN Background Subtraction
         % Parameter Setting Section

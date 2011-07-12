@@ -1,4 +1,4 @@
-function SIAM_bkgdSubtraction(X, m, n)
+function SS = SIAM_bkgdSubtraction(X, m, n)
 %% RPCA demo using TFOCS
 % This is a demo of Robust PCA (RPCA) using <http://tfocs.stanford.edu TFOCS>. Since 2009,
 % there has been much interest in this specific RPCA formulation
