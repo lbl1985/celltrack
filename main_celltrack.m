@@ -8,7 +8,8 @@
 close all;
 workingpath = which('main_celltrack.m');
 workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
-addpath(genpath(pwd));
+projectAddPath(workingpath, 'celltrack');
+% addpath(genpath(workingpath));
 
 % Parameter Setting Section
 % method = 'MEAN';
