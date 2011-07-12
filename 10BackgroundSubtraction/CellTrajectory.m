@@ -36,7 +36,9 @@ cd(workingPath);
 numDigits = 4;
 
 % if the input is very huge resize it
-kResizeRatio = 1;
+if strcmp(method, 'SIAM')
+    kResizeRatio = 0.5;
+end
 
 % CameraId = 1;
 % Camera_dir = 'C:\Users\lbl1985\Documents\MATLAB\work\database\celltracking\3tubes_010flow_g10';
@@ -48,7 +50,7 @@ filename = filenamesImg{1}(1:end - 7);
 img_color = imread([srcdirImg filenamesImg{1}]);
 % nFramesTotal = abs(video{1}.nrFramesTotal);
 [frameHeight frameWidth depth]= size(img_color);
-frameHeight = frameHeight*kResizeRatio; frameWidth = frameWidth*kResizeRatio;
+frameHeight = ceil(frameHeight*kResizeRatio); frameWidth = ceil(frameWidth*kResizeRatio);
 
 
 switch method
@@ -116,11 +118,18 @@ switch method
         
     case 'SIAM'
         mat  = @(x) reshape( x, frameHeight, frameWidth, nframes);
-        originalVideo = images2var(srcdirImg, filenamesImg);
+        originalVideo = images2var(srcdirImg, filenamesImg, kResizeRatio);
         fg = SIAM_bkgdSubtraction(originalVideo, frameHeight, frameWidth);
         fg = mat(fg);
+        save(fullfile(resVivoDataPath, [filename 'SIAM_bgSub_origin.mat']), 'fg');
+        for frameNum = 1 : nframes
+            tempfg = fg(:, :, frameNum);
+            tempfg = medfilt2(tempfg, [4 4]);
+%             tempfg = medfilt2(tempfg, [5 5]);
+            fg(:, :, frameNum) = tempfg;
+        end
         varargout{1} = fg;  varargout{2} = srcdirImg; varargout{3} = filenamesImg;
-        
+        save(fullfile(resVivoDataPath, [filename 'SIAM_bgSub.mat']), 'fg');
     case 'MEAN'
         %% MEAN Background Subtraction
         % Parameter Setting Section

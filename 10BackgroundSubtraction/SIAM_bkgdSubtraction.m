@@ -144,8 +144,8 @@ colormap( 'Gray' );
 k = 1;
 for k = 1:nFrames
     
-    imagesc( [mat(X(:,k)), mat(LL_0(:,k)),  mat(SS_0(:,k)); ...
-              mat(X(:,k)), mat(LL(:,k)),    mat(SS(:,k))  ] );
+%     imagesc( [mat(X(:,k)), mat(LL_0(:,k)),  mat(SS_0(:,k)); ...
+%               mat(X(:,k)), mat(LL(:,k)),    mat(SS(:,k))  ] );
           
     imagesc( [mat(X(:,k)), mat(LL(:,k)),    mat(SS(:,k))  ] );
   

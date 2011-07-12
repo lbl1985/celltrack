@@ -62,7 +62,7 @@ for id = 7
     cellID= cellIDGen(degreeVideo, STATSBatch);
     
     %% Result Visualization Section
-    isRecord = 0;
+    isRecord = 1;
     if ~isRecord
         recordFileName = [];
     else
