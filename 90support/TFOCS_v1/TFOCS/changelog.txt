@@ -1,0 +1,45 @@
+March 20 2011, v1.0c
+    An almost comprehensive lists of changes since December:
+    New:
+        solver_TraceLS.m    
+        solver_sLP.m        Linear Program solver
+        solver_sSDP.m       Semi-Definite Program solver
+        solver_sLMI.m       Linear Matrix Inequality solver
+        prox_hinge.m        Proximity fcn for hinge-loss
+        prox_hingeDual.m    Proximity fcn for dual of hinge-loss
+        proj_0.m            Projection onto zero. Added for completeness.
+        smooth_huber.m      Huber function
+        smooth_logLLogistic.m   Log-likelihood of the logistic function
+        smooth_logLPoisson.m    Log-likelihood of independent Poisson r.v.
+
+        The continuation feature is now builtin to tfocs_SCD.m
+
+    Updated and/or bug fixes:
+        linop_subsample.m   -- can now handle matrix entry sampling
+        proj_l2.m   -- bug fix
+        prox_l1.m   -- allow scaling "q" to be a non-negative vector
+        proj_box.m  -- bug fix
+        private/tfocs_initialize.m  -- bug fixes
+        private/tfocs_iterate.m     -- bug fixes
+
+        smallscale/examples: the .mat files have been moved to a separate
+            directory
+        smooth_quad.m   -- allows nonsmooth usage too now
+        solver_L1RS.m   -- bug fix (typo)
+        linop_test.m    -- now compatible with multidemensional arrays
+
+    New demos:
+        smallscale/example_LinearProgram.m  linear programming
+        smallscale/example_SDP.m        semi-definite programming
+        smallscale/example_LMI.m        linear matrix inequality
+        largescale/image_denosing_withSPOT.m
+
+    User guide:
+        Updated to mention the new routines
+        Describes scaling issues
+        Describes continuation
+        Added acknowledgements section
+
+    Misc:
+        Thanks to Graham Coleman for bug-fixes related to multidimensional
+        arrays
