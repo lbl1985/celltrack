@@ -13,13 +13,14 @@ projectAddPath(workingpath, 'celltrack');
 
 % Parameter Setting Section
 % method = 'MEAN';
-method = 'MoG';
+% method = 'MoG';
+method = 'SIAM';
 isSliding = 'OFF';
 % Recording
 debugRecord = 0;
 datapath = fullfile(workingpath, '01database', 'vivo');
 [datapath videoName n] = rfdatabase(datapath, [], '.avi');
-for id = 1 :  n
+for id = 7
     switch isSliding
         case 'OFF'
             if strcmp(method, 'MoG')
@@ -30,9 +31,10 @@ for id = 1 :  n
             % parameter setting section
             T = 300;            fTb = 3 * 3;
             % Video Background Subtraction Result .Mat data Name
-            videoPostName = ['batchRun_Video_' videoName{id} 'MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_trial1'];
+%             videoPostName = ['batchRun_Video_' videoName{id} 'MoG_fAlphaT' num2str(T) '_fTb' num2str(fTb) '_trial1'];
+            videoPostName = ['batchRun_Video_' videoName{id}(1:end-4) '_SIAM_trial1'];
             % Where to save the data before.
-            resVivoDataPath = fullfile(workingpath, '\Results\vivo\batchRun\');
+            resVivoDataPath = fullfile(workingpath, '\Results\vivo\batchRun_SIAM\');
             filevar = [{datapath} {videoPostName} {resVivoDataPath}];
             
             [fg srcdirImg filenamesImg] = CellTrajectory(id, nd, method, filevar, debugRecord, T, fTb);
@@ -60,13 +62,13 @@ for id = 1 :  n
     cellID= cellIDGen(degreeVideo, STATSBatch);
     
     %% Result Visualization Section
-    isRecord = 1;
+    isRecord = 0;
     if ~isRecord
         recordFileName = [];
     else
         % If record, what is the name and location to save the video.
-        recordFileName = fullfile(workingpath, '\Results\vivo\batchRun\', ...
-            [videoName{id} '_batchRun_trial1.avi']);
+        recordFileName = fullfile(workingpath, '\Results\vivo\batchRun_SIAM\', ...
+            [videoName{id} '_batchRun_SIAM_trial1.avi']);
     end
     %
     ideaShow_celltrack('bkgd_with_dynamics', isRecord, recordFileName, fg, srcdirImg, filenamesImg, fgVideo, openClosingVideo, combineImage, STATSBatch, cellID);
