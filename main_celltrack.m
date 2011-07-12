@@ -20,7 +20,7 @@ isSliding = 'OFF';
 debugRecord = 0;
 datapath = fullfile(workingpath, '01database', 'vivo');
 [datapath videoName n] = rfdatabase(datapath, [], '.avi');
-for id = 7
+for id = [1:6 8 : n]
     switch isSliding
         case 'OFF'
             if strcmp(method, 'MoG')
