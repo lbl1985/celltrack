@@ -43,22 +43,10 @@ classdef videoClip < handle
             loadingName = [obj.videoName(1 : end - 4), resultVideoNameCompensation];
             load(fullfile(loadingPath, loadingName));
             obj.foreGround_RPCA = uint8(fg);
-        end
-        
-%         function comparePlot(obj)
-%             
-%             subplot(1, 3, 1);             
-%         end
-            
+        end 
     end
     
     methods % supporting functions
-%         function obj = set.videoName(obj, inputName)
-%             obj.videoName = inputName;
-%         end
-%         function obj = set.videoPath(obj, inputPath)
-%             obj.videoPath = inputPath;
-%         end
             
     end
         

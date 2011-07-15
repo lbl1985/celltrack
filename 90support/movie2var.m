@@ -18,6 +18,8 @@ if isempty(isGray)
 end
 
 if siz ~= 1
+    dimensions = size(sampleFrame);
+    dimensions = dimensions(1:2);
     numrows = ceil(dimensions(1) * siz);
     numcols = ceil(dimensions(2) * siz);
 end
