@@ -17,16 +17,21 @@ if isempty(isGray)
     end
 end
 
+if siz ~= 1
+    numrows = ceil(dimensions(1) * siz);
+    numcols = ceil(dimensions(2) * siz);
+end
+
 if ~isGray
-    mat = uint8(zeros(video.height * siz, video.width * siz ,3, n));    
+    mat = uint8(zeros(numrows, numcols ,3, n));    
     for i = 1 : n
-        mat(:, :, :, i) = uint8(imresize(video.frames(i).cdata, siz));        
+        mat(:, :, :, i) = uint8(imresize(video.frames(i).cdata, [numrows numcols]));        
     end
 else
     
-    mat = uint8(zeros(video.height * siz, video.width * siz, n));
+    mat = uint8(zeros(numrows,numcols, n));
     for i = 1 : n
-        mat(:, :, i) = uint8(imresize(rgb2gray(video.frames(i).cdata), siz));
+        mat(:, :, i) = uint8(imresize(rgb2gray(video.frames(i).cdata), [numrows numcols]));
     end
 end
 
