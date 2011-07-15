@@ -1,23 +1,21 @@
-classdef videoClip
+classdef videoClip < handle
     %VIDEOCLIP Summary of this class goes here
     %   Detailed explanation goes here
     
     properties (SetAccess = private)
-        foreGround_MoG = 0;
-        foreGround_RPCA = 0;  
-        origVideo = 0;
+        foreGround_MoG;
+        foreGround_RPCA;  
+        origVideo;
         
-        ratio = 1;
+        ratio = 0.5;
         
-        nFrame = 0; 
+        nFrame; 
         videoName;
         videoPath;  
     end
     
     properties (SetAccess = public)
-
-       resultVideoNameCompensation = '';
-       resultVideoPathCompensation = '';        
+      
     end
     
     methods 
@@ -38,15 +36,19 @@ classdef videoClip
             obj.foreGround_MoG = fg;
         end
         
-        function obj = read_fg_RPCA(videoPath, videoName)
-            load(fullfile(videoPath, videoName));
-            obj.foreGround_RPCA = fg;
+        function read_fg_RPCA(obj)
+            resultVideoPathCompensation = '../../Results/vivo/batchRun_SIAM/';
+            resultVideoNameCompensation = '_SIAM_bgSub.mat';
+            loadingPath = fullfile(obj.videoPath, resultVideoPathCompensation);
+            loadingName = [obj.videoName(1 : end - 4), resultVideoNameCompensation];
+            load(fullfile(loadingPath, loadingName));
+            obj.foreGround_RPCA = uint8(fg);
         end
         
-        function comparePlot(obj)
-            
-            subplot(1, 3, 1);             
-        end
+%         function comparePlot(obj)
+%             
+%             subplot(1, 3, 1);             
+%         end
             
     end
     
