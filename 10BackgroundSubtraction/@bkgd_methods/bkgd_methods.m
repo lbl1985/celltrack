@@ -56,8 +56,4 @@ classdef bkgd_methods < handle
             startFrame = 1;
         end
     end
-    
-        
-    
 end
-
