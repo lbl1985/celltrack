@@ -6,16 +6,31 @@ classdef videoClip
         foreGround_MoG = 0;
         foreGround_RPCA = 0;  
         origVideo = 0;
+        
+        ratio = 1;
+        
+        nFrame = 0; 
         videoName;
-        videoPath;        
+        videoPath;  
+    end
+    
+    properties (SetAccess = public)
+
+       resultVideoNameCompensation = '';
+       resultVideoPathCompensation = '';        
     end
     
     methods 
-%         function obj = VideoClip()
+        function obj = videoClip(videoPath, videoName)
+            obj.videoPath = videoPath;
+            obj.videoName = videoName;            
+        end
 
-        function obj = read_Video(videoPath, videoName)
-            load(fullfile(videoPath, videoName));
-%             obj.origVideo = 
+        function obj = read_Video(obj)
+            obj.origVideo = movie2var(fullfile(obj.videoPath, obj.videoName), [], obj.ratio);  
+            if obj.nFrame ~= 0
+                obj.nFrame = size(obj.origVideo, ndims(obj.origVideo));
+            end
         end
             
         function obj = read_fg_MoG(videoPath, videoName)
@@ -28,13 +43,21 @@ classdef videoClip
             obj.foreGround_RPCA = fg;
         end
         
-        
-%         function comparePlot(obj)
+        function comparePlot(obj)
+            
+            subplot(1, 3, 1);             
+        end
             
     end
     
     methods % supporting functions
-
+%         function obj = set.videoName(obj, inputName)
+%             obj.videoName = inputName;
+%         end
+%         function obj = set.videoPath(obj, inputPath)
+%             obj.videoPath = inputPath;
+%         end
+            
     end
         
     
