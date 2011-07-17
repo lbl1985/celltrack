@@ -52,7 +52,7 @@ classdef videoClip < handle
         end 
     end
     
-    methods % supporting functions
+    methods % supporting functions -- bkgd methods
         function [mogVideo fAlphaT] = mogPrepareFunc(obj)
             if(obj.T ~= 0)
                 fAlphaT = 1/ obj.T;
@@ -69,6 +69,17 @@ classdef videoClip < handle
             
             repmat_para = [1 1 1 obj.nd];            
             mogVideo = repmat(mogVideo, repmat_para);
+        end
+    end
+    
+    methods % supporting functions -- visualization
+        function compareBkgdMethods(obj, mog, rpca)
+            for t = 1 : obj.nFrame
+                subplot(1, 3, 1);   imshow(obj.origVideo(:, :, t)); title(['orig Frame ' num2str(t)]);
+                subplot(1, 3, 2);   imshow(mog(:, :, t)); title('mog');
+                subplot(1, 3, 3);   imshow(rpca(:, :, t)); title('rpca');
+                pause(1/22);
+            end
         end
     end
 end
