@@ -9,7 +9,7 @@ classdef videoClip < handle
         
         ratio = 0.5;
         
-        nFrame; 
+        nFrame = 0; 
         videoName;
         videoPath;  
     end
@@ -20,7 +20,7 @@ classdef videoClip < handle
     end
     
     properties (Dependent = true, SetAccess = private)
-        fAlphaT
+%         fAlphaT
     end
     
     methods 
@@ -31,14 +31,15 @@ classdef videoClip < handle
 
         function obj = read_Video(obj)
             obj.origVideo = movie2var(fullfile(obj.videoPath, obj.videoName), [], obj.ratio);  
-            if obj.nFrame ~= 0
+            if obj.nFrame == 0
                 obj.nFrame = size(obj.origVideo, ndims(obj.origVideo));
             end
         end
             
         function obj = bkgd_subtraction_MoG(obj)
-            mogVideo = mogPrepareFunc(obj);
-            obj.foreGround_MoG = bkgd_methods.mog(mogVideo, 1/obj.T, obj.fTb, obj.nd);            
+            [mogVideo fAlphaT] = mogPrepareFunc(obj);
+            bkgd = bkgd_methods();
+            obj.foreGround_MoG = bkgd.mog(mogVideo, fAlphaT, obj.fTb, obj.nd);               
         end
         
         function read_fg_RPCA(obj)
@@ -52,21 +53,23 @@ classdef videoClip < handle
     end
     
     methods % supporting functions
-        function mogVideo = mogPrepareFunc(obj)
+        function [mogVideo fAlphaT] = mogPrepareFunc(obj)
             if(obj.T ~= 0)
-                obj.fAlphaT = 1/ obj.T;
-            end
-            if(ndims(obj.origVideo) == 3)
-                repmat_para = [ 1 1 obj.nd];
+                fAlphaT = 1/ obj.T;
             else
-                repmat_para = [1 1 1 obj.nd];
+                error('T should be 0');
             end
-            mogVideo = repmat(obj.origVideo, repmat_para);
-        end
+            mogVideo = [];
+            if(ndims(obj.origVideo) == 3)
+                % MoG require RGB data
+                for t = 1 : obj.nFrame
+                    mogVideo = cat(4, mogVideo, repmat(obj.origVideo(:, :, t), [1 1 3]));
+                end                
+            end
             
-        
+            repmat_para = [1 1 1 obj.nd];            
+            mogVideo = repmat(mogVideo, repmat_para);
+        end
     end
-        
-    
 end
 
