@@ -10,7 +10,15 @@ classdef cellCountClip < videoClip
         function obj = cellCountClip(videoPath, videoName)
             obj = obj@videoClip(videoPath, videoName);
         end
-    end
-    
+        
+        function binaryRpca(obj)
+            if ~empty(obj.foreGround_RPCA)
+                obj.fg_rpca_threshold = obj.foreGroundRPCA;
+            end
+            for t = 1 : obj.nFrame
+                obj.fg_rpca_threshold(:, :, t) = obj.fg_rpca_threshold(:, :, t) > 1;
+            end
+        end
+    end    
 end
 
