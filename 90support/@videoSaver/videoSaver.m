@@ -1,43 +1,48 @@
-classdef saveVideo < handle
+classdef videoSaver < handle
     %SAVEVIDEO Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
         movieFile
         M
-        fbeg = 1;
-        fend
         frameRate
         clrmap
         aviobj
         fig
     end
     
+    properties (SetAccess = public)
+        fbeg = 1;
+        fend
+    end 
+    
     methods
-        function obj = saveVideo(requiredName, requiredFrameRate, varargin)
+        function obj = videoSaver(requiredName, requiredFrameRate)
             obj.movieFile = requiredName;
             obj.frameRate = requiredFrameRate;
             obj.aviobj = avifile(obj.movieFile, 'fps', obj.frameRate, ...
-                'copression', 'none');
-            if isempty(varargin)
-                obj.fbeg = 1;   obj.fend = size(input, ndims(inputVideo));
-            else
-                obj.fbeg = varargin{1}; obj.fend = varargin{2};
-            end
+                'compression', 'none');            
         end
         
-        function obj = saveProcess(obj, inputVideo)
+        function obj = save(obj, inputVideo,varargin)
             obj.M = inputVideo;     nd = ndims(obj.M);
             obj.fig = figure;
             
-            for t = obj.fbeg : obj.fen
+            if isempty(varargin)
+                obj.fbeg = 1;   obj.fend = size(inputVideo, ndims(inputVideo));
+            else
+                obj.fbeg = varargin{1}; obj.fend = varargin{2};
+            end
+            
+            for t = obj.fbeg : obj.fend
                 figure(obj.fig);
                 if nd == 3
-                    imshow(obj.M(:, :, t));
+                    imshow(obj.M(:, :, t)); 
                 else
-                    imshow(obj.M(:, :, :, t));
+                    imshow(obj.M(:, :, :, t)); 
                 end
-                saveCore();
+                title(['Frame ' num2str(t)]);   pause(1/22); 
+                obj.saveCore();
             end
             obj.aviobj = close(obj.aviobj);
         end
@@ -46,8 +51,6 @@ classdef saveVideo < handle
             frame = getframe(obj.fig);
             obj.aviobj = addframe(obj.aviobj, frame);
         end
-        
     end
-    
 end
 
