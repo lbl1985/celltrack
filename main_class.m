@@ -1,4 +1,4 @@
-close all;
+clear all; close all; clc;
 workingpath = which('main_celltrack.m');
 workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
 projectAddPath(workingpath, 'celltrack');
