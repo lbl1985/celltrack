@@ -4,6 +4,7 @@ classdef cellCountClip < videoClip
     
     properties
         fg_rpca_threshold;
+        fg_rpca_median;
     end
     
     methods
@@ -12,13 +13,22 @@ classdef cellCountClip < videoClip
         end
         
         function binaryRpca(obj)
-            if ~empty(obj.foreGround_RPCA)
-                obj.fg_rpca_threshold = obj.foreGroundRPCA;
+            if ~isempty(obj.foreGround_RPCA)
+                obj.fg_rpca_threshold = obj.foreGround_RPCA;
             end
             for t = 1 : obj.nFrame
-                obj.fg_rpca_threshold(:, :, t) = obj.fg_rpca_threshold(:, :, t) > 1;
+                obj.fg_rpca_threshold(:, :, t) = obj.fg_rpca_threshold(:, :, t) > 0.01;
             end
         end
+        
+        function medianFilter(obj)
+            if ~isempty(obj.foreGround_RPCA)
+                obj.fg_rpca_median = obj.foreGround_RPCA;
+            end
+            for t = 1 : obj.nFrame
+                obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [4 4]);
+            end
+        end                
     end    
 end
 

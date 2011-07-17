@@ -44,6 +44,11 @@ classdef videoClip < handle
             obj.foreGround_MoG = bkgd.mog(mogVideo, fAlphaT, obj.fTb, obj.nd);               
         end
         
+        function obj = bkgd_subtraction_rpca(obj)
+            bkgd = bkgd_methods();
+            obj.foreGround_RPCA = bkgd.rpca(obj.origVideo);
+        end
+        
         function read_fg_RPCA(obj)
             resultVideoPathCompensation = '../../Results/vivo/batchRun_SIAM/';
             resultVideoNameCompensation = '_SIAM_bgSub.mat';

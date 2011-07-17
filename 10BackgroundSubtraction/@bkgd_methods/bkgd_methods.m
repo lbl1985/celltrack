@@ -48,6 +48,16 @@ classdef bkgd_methods < handle
                 end
             end
         end
+        
+        function varargout = rpca(varargin)
+            [obj obj.inputVideo] = varin2out(varargin);
+            [frameHeight frameWidth nframes]= size(obj.inputVideo);
+            mat  = @(x) reshape( x, frameHeight, frameWidth, nframes);
+            
+            obj.fg = SIAM_bkgdSubtraction(obj.inputVideo, frameHeight, frameWidth);
+            obj.fg = mat(obj.fg);
+            varargout{1} = obj.fg;
+        end
     end
     
     methods  % Supporting functions
