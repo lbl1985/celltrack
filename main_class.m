@@ -6,8 +6,8 @@ projectAddPath(workingpath, 'celltrack');
 datapath = fullfile(workingpath, '01database', 'vivo');
 [datapath videoName n] = rfdatabase(datapath, [], '.avi');
 
-% for id = [1 4 6:11 13:17]
-for id = 7    
+for id = [1 4 6:11 13:17]
+% for id = 7    
     vt = cellCountClip(datapath, videoName{id});
     vt.read_Video();
     vt.bkgd_subtraction_MoG();
