@@ -16,7 +16,9 @@ classdef videoClip < handle
     
     properties (SetAccess = public)
       T = 300;              fTb = 3 * 3;   
-      nd = 4;               
+      nd = 4;        
+      
+      playType = 'rpca';
     end
     
     properties (Dependent = true, SetAccess = private)
@@ -47,12 +49,12 @@ classdef videoClip < handle
             resultVideoNameCompensation = '_SIAM_bgSub.mat';
             loadingPath = fullfile(obj.videoPath, resultVideoPathCompensation);
             loadingName = [obj.videoName(1 : end - 4), resultVideoNameCompensation];
-            load(fullfile(loadingPath, loadingName));
+            load(fullfile(loadingPath, loadingName));            
             obj.foreGround_RPCA = uint8(fg);
         end 
     end
     
-    methods % supporting functions -- bkgd methods
+    methods % supporting functions -- preparation
         function [mogVideo fAlphaT] = mogPrepareFunc(obj)
             if(obj.T ~= 0)
                 fAlphaT = 1/ obj.T;
@@ -70,6 +72,19 @@ classdef videoClip < handle
             repmat_para = [1 1 1 obj.nd];            
             mogVideo = repmat(mogVideo, repmat_para);
         end
+        
+        function typeSource = visPrepareFunc(obj)
+            if strcmp(obj.playType, 'rpca') == 1
+                typeSource = obj.foreGround_RPCA;
+            else
+                if strcmp(obj.playType, 'mog') == 1
+                    typeSource = obj.foreGround_MoG;
+                else
+                    command = ['typeSource = obj.' obj.playType ';'];
+                    eval(command);
+                end
+            end
+        end
     end
     
     methods % supporting functions -- visualization
@@ -81,6 +96,22 @@ classdef videoClip < handle
                 pause(1/22);
             end
         end
+        
+        function playM_asVideo(obj)
+            typeSource = visPrepareFunc(obj);
+            for t = 1 : obj.nFrame
+                imshow(typeSource(:, :, t));    title(['Frame ' num2str(t)]);
+                pause(1/22);
+            end
+        end
+        
+        function saveM_asVideo(filename)
+            typeSource = visPrepareFunc();
+            videoSave1 = videoSaver(filename, 11);
+            videoSave1.save(typeSource);
+        end
+        
+        
     end
 end
 
