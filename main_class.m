@@ -1,3 +1,18 @@
-v15 = videoClip(datapath, videoName{7});
-v15.read_Video();
-v15.bkgd_subtraction_MoG();
+close all;
+workingpath = which('main_celltrack.m');
+workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
+projectAddPath(workingpath, 'celltrack');
+
+datapath = fullfile(workingpath, '01database', 'vivo');
+[datapath videoName n] = rfdatabase(datapath, [], '.avi');
+
+% for id = [1 4 6:11 13:17]
+for id = 7    
+    vt = cellCountClip(datapath, videoName{id});
+    vt.read_Video();
+    vt.bkgd_subtraction_MoG();
+    vt.bkgd_subtraction_rpca();
+
+    vt.saveData();
+    clear vt
+end

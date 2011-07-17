@@ -7,6 +7,10 @@ classdef cellCountClip < videoClip
         fg_rpca_median;
     end
     
+    properties (SetAccess = public)
+        resultVideoPathCompensation = '../../Results/vivo/batchRun_object/';
+    end
+    
     methods
         function obj = cellCountClip(videoPath, videoName)
             obj = obj@videoClip(videoPath, videoName);
@@ -29,6 +33,15 @@ classdef cellCountClip < videoClip
                 obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [4 4]);
             end
         end                
-    end    
+    end  
+    
+    methods % supporting functions
+        function obj = saveData(obj)
+            videoID = obj.videoName(1:end-4);
+            command = ['v' videoID ' = obj; save(fullfile(obj.videoPath, '...
+                'obj.resultVideoPathCompensation, ''video_' videoID '.mat''), ''v' videoID ''')'];
+            eval(command);
+        end
+    end            
 end
 
