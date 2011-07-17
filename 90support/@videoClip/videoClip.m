@@ -15,7 +15,12 @@ classdef videoClip < handle
     end
     
     properties (SetAccess = public)
-      
+      T = 300;              fTb = 3 * 3;   
+      nd = 4;               
+    end
+    
+    properties (Dependent = true, SetAccess = private)
+        fAlphaT
     end
     
     methods 
@@ -31,9 +36,9 @@ classdef videoClip < handle
             end
         end
             
-        function obj = read_fg_MoG(videoPath, videoName)
-            load(fullfile(videoPath, videoName));
-            obj.foreGround_MoG = fg;
+        function obj = bkgd_subtraction_MoG(obj)
+            mogVideo = mogPrepareFunc(obj);
+            obj.foreGround_MoG = bkgd_methods.mog(mogVideo, 1/obj.T, obj.fTb, obj.nd);            
         end
         
         function read_fg_RPCA(obj)
@@ -47,7 +52,19 @@ classdef videoClip < handle
     end
     
     methods % supporting functions
+        function mogVideo = mogPrepareFunc(obj)
+            if(obj.T ~= 0)
+                obj.fAlphaT = 1/ obj.T;
+            end
+            if(ndims(obj.origVideo) == 3)
+                repmat_para = [ 1 1 obj.nd];
+            else
+                repmat_para = [1 1 1 obj.nd];
+            end
+            mogVideo = repmat(obj.origVideo, repmat_para);
+        end
             
+        
     end
         
     
