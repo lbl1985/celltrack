@@ -10,7 +10,9 @@ classdef cellCountDebugClip < cellCountClip
             obj = obj@cellCountClip(videoPath, videoName);
         end
         
-        function copy
+        function obj = copyCellCountClip(obj, incomeObject)
+            obj = incomeObject;
+        end
     end
     
 end
