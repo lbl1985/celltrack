@@ -1,6 +1,12 @@
 function [status, result] = git(varargin)
 
-cmd = '"c:\Program Files (x86)\Git\cmd\git.cmd"';
+if ispc
+    cmd = '"c:\Program Files (x86)\Git\cmd\git.cmd"';
+end
+if ismac
+    cmd = '"/usr/local/git/bin/git"';
+end
+        
 for i = 1:numel(varargin)
     cmd = [cmd ' ' varargin{i}];
 end
