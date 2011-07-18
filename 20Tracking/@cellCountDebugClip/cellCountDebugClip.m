@@ -3,6 +3,7 @@ classdef cellCountDebugClip < cellCountClip
     %   Detailed explanation goes here
     
     properties
+        videoPathMac
     end
     
     methods
@@ -15,5 +16,12 @@ classdef cellCountDebugClip < cellCountClip
         end
     end
     
+    methods % supporting functions
+        function obj = adjustVideoPath(obj)
+            if ismac
+                obj.videoPathMac = fullfile('~', obj.videoPath(18:end));
+            end
+        end
+    end
 end
 
