@@ -24,15 +24,15 @@ clear
     'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object', ...
     [], '.mat');
 for i = 1 : n
-    idName = videoName{i}(16 : end - 4);
+    idName = videoName{i}(7 : end - 4);
     display(idName);
     load(fullfile(datapath, videoName{i}));
-    command = ['vt = v' idName];
+    command = ['vt = v' idName '; clear v' idName ';'];
     eval(command);
     vt.medianFilter();
-    blobDetector = detectBlob(v15.fg_rpca_median);
+    blobDetector = detectBlob(vt.fg_rpca_median);
     blobDetector.blobDetectionVideo();
-    figure(1); 
+    figure(); 
     imshow(sum(blobDetector.centroidTrajectory, 3))
     title(idName);
 end
