@@ -15,6 +15,10 @@ classdef cellDecided < blobCell
                 obj.appearBoundingBox = blobInfo.BoundingBox;
             end
         end
+        
+        function obj = copyFromSuperClass(obj, incomeObj)
+            obj = incomeObj;
+        end
     end
     
 end

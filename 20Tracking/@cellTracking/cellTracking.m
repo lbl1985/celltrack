@@ -11,6 +11,7 @@ classdef cellTracking < handle
     
     properties (SetAccess = public)
         frameId
+        searchRadius = 10;
     end
     
     methods
@@ -22,6 +23,28 @@ classdef cellTracking < handle
             end
         end
         
+        function cellDecision(obj)
+            for t = 1 : obj.nFrame
+                if ~isempty(obj.blobCellFrameVideo(t))                    
+                    cellDecidedTemp = obj.copyFrameBlobs(obj.blobCellFrameVideo(t));
+%                     cellDecidedTemp = blobCellFrameVideo(
+                end
+            end
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        end
+        
+        % TODO: This function might be removed in the future.
         function blobDetectionVideo(obj)
             for t = 1 : obj.nFrame
                 obj.frameId = t;
@@ -31,6 +54,8 @@ classdef cellTracking < handle
             end                 
         end
         
+        % TODO: the functionaliyt of this function might be improved 
+        % by adding blobCellFrameVideo and blobCellVideo cat functionality
         function frameBlobs = blobDetectionFrame(obj) 
             eachFrame = obj.extractFrame();
             STATS = regionprops(eachFrame>0);
@@ -68,6 +93,14 @@ classdef cellTracking < handle
         function eachFrame = extractFrame(obj)
             eachFrame = obj.inputVideoData(:, :, obj.frameId);
             eachFrame = uint8(eachFrame);
+        end
+        
+        function cellDecidedTemp = copyFrameBlobs(frameBlobs)
+            nBlobs = length(frameBlobs);
+            cellDecidedTemp = repmat(cellDecided(), nBlobs, 1);
+            for i = 1 : nBlobs
+                cellDecidedTemp(i) = cellDecidedTemp(i).copyFromSuperClass(frameBlobs(i));
+            end
         end
     end
 end
