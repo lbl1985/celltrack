@@ -1,7 +1,7 @@
 % 2e6_rightear_slide_g15_yes
-gt_2e6_rightear_slide_g15_yes(1).fl = 'topMiddle';
-gt_2e6_rightear_slide_g15_yes(1).ff = 120;
-gt_2e6_rightear_slide_g15_yes(1).lf = 145;
+gt_2e6_rightear_slide_g15_yes1(1).fl = 'topMiddle';
+gt_2e6_rightear_slide_g15_yes1(1).ff = 120;
+gt_2e6_rightear_slide_g15_yes1(1).lf = 145;
 % 2e6_rightear_slide_g15_yes2
 gt_2e6_rightear_slide_g15_yes2(1).fl = 'topMiddle';
 gt_2e6_rightear_slide_g15_yes2(1).ff = 143;

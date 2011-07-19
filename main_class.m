@@ -62,7 +62,7 @@ end
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
 centroidTrajectoryWithGroundTruthSavingPath = ...
     'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\trajectoryWithCellNum';
-for i = 5
+for i = 1 : n
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     
@@ -74,7 +74,10 @@ for i = 5
     blobDetector.blobDetectionVideo();
     
     command = ['gt = gt_' idName ';'];  eval(command);
-    filename = fullfile(centroidTrajectoryWithGroundTruthSavingPath, [idName '_traj_trial1.avi']);
+    filename = fullfile(centroidTrajectoryWithGroundTruthSavingPath, [idName '_bkgdComparsion.avi']);
     saver1 = centroidTrajectoryWithGroundTruthVideoSaver(filename, 11);
-    saver1.saveWithGroundOnCaption(blobDetector.centroidTrajectoryIncrease, gt);
+    mog = vt.foreGround_MoG;    mog(mog > 0.1) = 255; 
+    rpca = vt.fg_rpca_median;   rpca(rpca > 0.1) = 255;
+    saver1.saveWithGroundOnCaption([mog vt.origVideo rpca], gt);
+%     saver1.saveWithGroundOnCaption([vt.origVideo vt.foreGround_MoG blobDetector.centroidTrajectoryIncrease(:, :, 1:250)], gt);
 end
