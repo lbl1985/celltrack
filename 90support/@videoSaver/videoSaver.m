@@ -46,6 +46,7 @@ classdef videoSaver < handle
             end
             obj.aviobj = close(obj.aviobj);
         end
+            
         
         function obj = saveCore(obj)
             frame = getframe(obj.fig);

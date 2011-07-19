@@ -8,6 +8,7 @@ classdef detectBlob < handle
         blobCellVideo
         blobCellFrameVideo
         centroidTrajectory
+        centroidTrajectoryIncrease
     end
     
     properties (SetAccess = public)
@@ -32,7 +33,9 @@ classdef detectBlob < handle
                 obj.blobCellFrameVideo(t) = blobCellFrame(frameBlobs);
                 obj.blobCellVideo = cat(1, obj.blobCellVideo, frameBlobs);
                 obj.plotCentroids(frameBlobs);
-            end                 
+                
+            end  
+            obj.centroidTrajectoryIncreaseCreate();
         end
         
         % TODO: the functionaliyt of this function might be improved 
@@ -96,8 +99,21 @@ classdef detectBlob < handle
                 centroidTrajectoryTemp(paintingLocationY, paintingLocationX) = 255;
                 %                 centroidTrajectoryTemp(paintingLocation) = 255;
             end
-            obj.centroidTrajectory = cat(3, obj.centroidTrajectory, centroidTrajectoryTemp);
-            
+            obj.centroidTrajectory = cat(3, obj.centroidTrajectory, centroidTrajectoryTemp);            
+        end
+        
+        function centroidTrajectoryIncreaseCreate(obj)            
+            obj.centroidTrajectoryIncrease = obj.centroidTrajectory;
+            for t = 1 : obj.nFrame
+                obj.centroidTrajectoryIncrease(:, :, t) = sum(obj.centroidTrajectoryIncrease(:, :, 1 : t), 3);
+            end
+        end
+                
+        
+        function saveVideoCombinedImage(obj, fileName)
+            combinedImage = sum(obj.centroidTrajectory, 3);
+%             imshow(combinedImage);
+            imwrite(combinedImage, fileName);
         end
     end
 end

@@ -25,22 +25,23 @@ if ispc
 else
     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
 end
-    
+combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
 [datapath videoName n] = rfdatabase(...
     datapath, ...
     [], '.mat');
 for i = 1 : n
     idName = videoName{i}(7 : end - 4);
-    display(idName);
+    display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
     command = ['vt = v' idName '; clear v' idName ';'];
     eval(command);
     vt.medianFilter();
     blobDetector = detectBlob(vt.fg_rpca_median);
     blobDetector.blobDetectionVideo();
-    figure(); 
-    imshow(sum(blobDetector.centroidTrajectory, 3))
-    title(idName);
+    blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
+    saver1 = videoSaver(['video' idName '_increase.avi'], 11);
+    saver1.save(blobDetector.centroidTrajectoryIncrease);
+    clear saver1
 end
 %% 
 clear
@@ -49,4 +50,5 @@ v15.medianFilter();
 blobDetector = detectBlob(v15.fg_rpca_median);
 blobDetector.blobDetectionVideo();
 imshow(sum(blobDetector.centroidTrajectory, 3))
+
     
