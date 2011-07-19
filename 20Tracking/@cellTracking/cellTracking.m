@@ -6,7 +6,7 @@ classdef cellTracking < handle
         inputVideoData
         nFrame
         blobCellVideo
-%         blobCellVideoGroundedByFrame
+        blobCellFrameVideo
     end
     
     properties (SetAccess = public)
@@ -18,6 +18,7 @@ classdef cellTracking < handle
             if nargin > 0
                 obj.inputVideoData = videoData;
                 obj.nFrame = size(videoData, ndims(videoData));
+                obj.blobCellFrameVideo = repmat(blobCellFrame, obj.nFrame, 1);
             end
         end
         
@@ -25,6 +26,7 @@ classdef cellTracking < handle
             for t = 1 : obj.nFrame
                 obj.frameId = t;
                 frameBlobs = obj.blobDetectionFrame();
+                obj.blobCellFrameVideo(t) = blobCellFrame(frameBlobs);
                 obj.blobCellVideo = cat(1, obj.blobCellVideo, frameBlobs);
             end                 
         end
