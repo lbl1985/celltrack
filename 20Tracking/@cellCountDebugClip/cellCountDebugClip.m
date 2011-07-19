@@ -3,15 +3,12 @@ classdef cellCountDebugClip < cellCountClip
     %   Detailed explanation goes here
     
     properties
-        videoPathMac
     end
     
     methods
         function obj = cellCountDebugClip(videoPath, videoName)
             obj = obj@cellCountClip(videoPath, videoName);
         end
-        
-        
     end
 end
 
