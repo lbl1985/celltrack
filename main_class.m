@@ -19,5 +19,9 @@ datapath = fullfile(workingpath, '01database', 'vivo');
 % end
 
 %% cellCount Section
-for id = [ 1 4 6:11 13:17]
+load video_15.mat
+v15.medianFilter();
+blobDetector = detectBlob(v15.fg_rpca_median);
+blobDetector.blobDetectionVideo();
+
     
