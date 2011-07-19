@@ -1,18 +1,24 @@
-classdef blobCell < handle
+classdef blobCell
     %BLOBCELL Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
+        blobID
         appearInFrame
         appearLocation
-        appearSize
+        appearBoundingBox
+        appearSize        
     end
     
     methods
         function obj = blobCell(blobInfo)
-            obj.appearInFrame = blobInfo.frameNum;
-            obj.appearLocation = blobInfo.Centroid;
-            obj.appearSize = blobInfo.Area;
+            if nargin > 0
+                obj.blobID = blobInfo.id;
+                obj.appearInFrame = blobInfo.frameNum;
+                obj.appearLocation = blobInfo.Centroid;
+                obj.appearSize = blobInfo.Area;
+                obj.appearBoundingBox = blobInfo.BoundingBox;
+            end
         end        
     end
     
