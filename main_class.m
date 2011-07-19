@@ -26,9 +26,7 @@ else
     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
 end
 combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
-[datapath videoName n] = rfdatabase(...
-    datapath, ...
-    [], '.mat');
+[datapath videoName n] = rfdatabase(datapath, [], '.mat');
 for i = 1 : n
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
