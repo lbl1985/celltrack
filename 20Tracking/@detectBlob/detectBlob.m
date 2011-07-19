@@ -15,7 +15,7 @@ classdef detectBlob < handle
     end
     
     methods
-        function obj = cellTracking(videoData)
+        function obj = detectBlob(videoData)
             if nargin > 0
                 obj.inputVideoData = videoData;
                 obj.nFrame = size(videoData, ndims(videoData));
