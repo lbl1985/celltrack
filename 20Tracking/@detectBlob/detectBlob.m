@@ -1,4 +1,4 @@
-classdef cellTracking < handle
+classdef detectBlob < handle
     %CELLCOUNTDEBUGCLIP Summary of this class goes here
     %   Detailed explanation goes here
     
