@@ -7,6 +7,7 @@ classdef detectBlob < handle
         nFrame
         blobCellVideo
         blobCellFrameVideo
+        centroidTrajectory
     end
     
     properties (SetAccess = public)
@@ -30,6 +31,7 @@ classdef detectBlob < handle
                 frameBlobs = obj.blobDetectionFrame();
                 obj.blobCellFrameVideo(t) = blobCellFrame(frameBlobs);
                 obj.blobCellVideo = cat(1, obj.blobCellVideo, frameBlobs);
+                obj.plotCentroids(frameBlobs);
             end                 
         end
         
@@ -80,6 +82,22 @@ classdef detectBlob < handle
             for i = 1 : nBlobs
                 cellDecidedTemp(i) = cellDecidedTemp(i).copyFromSuperClass(frameBlobs(i));
             end
+        end
+        
+        function plotCentroids(obj, frameBlobs)
+            siz = (size(obj.inputVideoData));   pointSize = 1;
+            centroidTrajectoryTemp = uint8(zeros(siz(1), siz(2)));
+            nBlobs = length(frameBlobs);
+            
+            for i = 1 : nBlobs
+                paintingLocation = floor(frameBlobs(i).appearLocation);
+                paintingLocationX = ((max(1, paintingLocation(1) - pointSize)) : min((paintingLocation(1) + pointSize), siz(1)));
+                paintingLocationY = ((max(1, paintingLocation(2) - pointSize)) : min((paintingLocation(2) + pointSize), siz(2)));
+                centroidTrajectoryTemp(paintingLocationY, paintingLocationX) = 255;
+                %                 centroidTrajectoryTemp(paintingLocation) = 255;
+            end
+            obj.centroidTrajectory = cat(3, obj.centroidTrajectory, centroidTrajectoryTemp);
+            
         end
     end
 end
