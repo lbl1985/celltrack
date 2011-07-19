@@ -30,11 +30,11 @@ gt_14(2).fl = 'topLeft';    gt_14(2).ff = 201;  gt_14(2).lf = 211;
 gt_15(1).fl = 'bottomRight'; gt_15(1).ff = 44;  gt_15(1).lf = 46;
 gt_15(2).fl = 'upperLeft';  gt_15(2).ff = 147;  gt_15(2).lf = 160;
 % 16
-gt_16(1).fl = 'middleLeft'; gt_16(1).ff = 154;  gt_16(2).lf = 217;
-gt_16(2).fl = 'bottomRight'; gt_16(2).ff = 194; gt_16(3).lf = 201;
+gt_16(1).fl = 'middleLeft'; gt_16(1).ff = 154;  gt_16(1).lf = 217;
+gt_16(2).fl = 'bottomRight'; gt_16(2).ff = 194; gt_16(2).lf = 201;
 gt_16(3).fl = 'bottomLeft'; gt_16(3).ff = 207;  gt_16(3).lf = 236;
 % 17
-gt_17(1).fl = 'topMiddle';  gt_17(1).ff = 54;   gt_17(2).lf = 65;
+gt_17(1).fl = 'topMiddle';  gt_17(1).ff = 54;   gt_17(1).lf = 65;
 gt_17(2).fl = 'middleLeft'; gt_17(2).ff = 138;  gt_17(2).lf = 163;
 % 18
 gt_18(1).fl = 'bottomRight'; gt_18(1).ff = 38;  gt_18(1).lf = 43;
