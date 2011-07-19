@@ -1,4 +1,4 @@
-classdef cellCountGroundTruth
+classdef cellCountGroundTruth < handle
     %CELLCOUNTGROUNDTRUTH Summary of this class goes here
     %   Detailed explanation goes here
     
