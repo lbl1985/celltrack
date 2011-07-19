@@ -20,8 +20,14 @@ datapath = fullfile(workingpath, '01database', 'vivo');
 
 %% cellCount Section
 clear
+if ispc 
+    datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
+else
+    datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
+end
+    
 [datapath videoName n] = rfdatabase(...
-    'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object', ...
+    datapath, ...
     [], '.mat');
 for i = 1 : n
     idName = videoName{i}(7 : end - 4);
