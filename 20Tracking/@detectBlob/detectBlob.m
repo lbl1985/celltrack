@@ -11,7 +11,7 @@ classdef detectBlob < handle
     
     properties (SetAccess = public)
         frameId
-        searchRadius = 10;
+        
     end
     
     methods
@@ -21,27 +21,6 @@ classdef detectBlob < handle
                 obj.nFrame = size(videoData, ndims(videoData));
                 obj.blobCellFrameVideo = repmat(blobCellFrame, obj.nFrame, 1);
             end
-        end
-        
-        function cellDecision(obj)
-            for t = 1 : obj.nFrame
-                if ~isempty(obj.blobCellFrameVideo(t))                    
-                    cellDecidedTemp = obj.copyFrameBlobs(obj.blobCellFrameVideo(t));
-%                     cellDecidedTemp = blobCellFrameVideo(
-                end
-            end
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         end
         
         % TODO: This function might be removed in the future.

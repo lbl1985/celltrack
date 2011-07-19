@@ -3,6 +3,7 @@ classdef cellDecided < blobCell
     %   Detailed explanation goes here
     
     properties
+        cellId
     end
     
     methods
