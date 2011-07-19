@@ -61,11 +61,7 @@ classdef cellTracking < handle
             blobInfo.Area = eachSTATS.Area;
             blobInfo.BoundingBox  = eachSTATS.BoundingBox;
             blobInfo.Centroid = eachSTATS.Centroid;            
-        end
-        
-%         function blobTrackingCore(obj)
-%            
-%         end
+        end        
     end
     
     methods % supporting function
