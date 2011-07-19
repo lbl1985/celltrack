@@ -1,19 +1,26 @@
-classdef cellCountDebugClip < cellCountClip
+classdef cellCountDebugClip
     %CELLCOUNTDEBUGCLIP Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
         inputVideoData
+        nFrame
+        PixelThreshold = 3000;
+        areaThreshold = 100;
+        DB = {};
+        ID = 1;
     end
     
     methods
-        function obj = cellCountDebugClip(videoPath, videoName)
-            obj = obj@cellCountClip(videoPath, videoName);
+        function obj = cellCountDebugClip(videoData)
+            obj.inputVideoData = videoData;
+            obj.nFrame = size(videoData, ndims(videoData));
         end
         
-        function blobTracking(obj, videoData)
-            obj.inputVideoData = videoData;
-        end
+%         function blobTracking(obj, videoData)
+%             
+%             obj.blobTrackingCore();
+%         end
         
         function blobTrackingCore(obj)
             nSeg = zeros(obj.nFrame, 1);
@@ -26,7 +33,7 @@ classdef cellCountDebugClip < cellCountClip
                 I = obj.inputVideoData(:, :, t); I = uint8(I);
                 
                 imshow(I, 'border', 'tight');
-                rectShow = figure(2); imshow(Ifilt, 'border', 'tight');
+                rectShow = figure(2); imshow(I, 'border', 'tight');
                 STATS = regionprops(I>0);
                 nSeg(t) = length(STATS);
                 
@@ -35,7 +42,7 @@ classdef cellCountDebugClip < cellCountClip
                 if t == 20
                     % Well, don't need t, and STATS at all. Just to fit in the
                     % interface.
-                    DB = databaseFuncCell(t, DB, 'cleanUpBeginning', STATS);
+                    obj.DB = databaseFuncCell(t, obj.DB, 'cleanUpBeginning', STATS);
                 end
                 
                 if nSeg(t) ~= 0
@@ -49,22 +56,22 @@ classdef cellCountDebugClip < cellCountClip
                     % Find the index for all blobs with area larger than the
                     % areaThreshold
                     %         a = structField2Vector(timeslot, 'Area');
-                    ind = find(a >= areaThreshold);
+                    ind = find(a >= obj.areaThreshold);
                     for i = 1 : length(ind)
                         tBlob = STATS(ind(i));
-                        if isempty(DB)
-                            DB = databaseFuncCell(t, DB, 'add', tBlob, ID);
-                            cellBoundingShow(tBlob, ID, rectShow);
-                            ID = ID + 1;
+                        if isempty(obj.DB)
+                            obj.DB = databaseFuncCell(t, obj.DB, 'add', tBlob, obj.ID);
+                            cellBoundingShow(tBlob, obj.ID, rectShow);
+                            obj.ID = obj.ID + 1;
                         else
-                            idQuery = databaseFuncCell(t, DB, 'search', tBlob);
+                            idQuery = databaseFuncCell(t, obj.DB, 'search', tBlob);
                             if idQuery ~= 0
-                                DB = databaseFuncCell(t, DB, 'update', tBlob, idQuery);
+                                obj.DB = databaseFuncCell(t, obj.DB, 'update', tBlob, idQuery);
                                 cellBoundingShow(tBlob, idQuery, rectShow);
                             else
-                                DB = databaseFuncCell(t, DB, 'add', tBlob, ID);
-                                cellBoundingShow(tBlob, ID, rectShow);
-                                ID = ID + 1;
+                                obj.DB = databaseFuncCell(t, obj.DB, 'add', tBlob, obj.ID);
+                                cellBoundingShow(tBlob, obj.ID, rectShow);
+                                obj.ID = obj.ID + 1;
                             end
                         end
                     end
