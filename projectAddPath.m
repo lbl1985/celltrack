@@ -7,6 +7,7 @@ switch projectName
         rmpath(genpath(fullfile(startingPath, '90support', 'TFOCS_v1', 'TFOCS')));
         rmpath(genpath(fullfile(startingPath, 'Results')));
         addpath(fullfile(startingPath, '90support', 'TFOCS_v1', 'TFOCS'));
+        addpath(fullfile(startingPath, 'Results', 'vivo', 'batchRun_object'));
 %         addpath(genpath(fullfile(startingPath, '01database')));
 %         addpath(genpath(fullfile(startingPath, '10BackgroundSubtraction')));
 %         addpath(genpath(fullfile(startingPath, '15PostProcessing')));

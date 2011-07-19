@@ -107,7 +107,8 @@ classdef detectBlob < handle
             for t = 1 : obj.nFrame
                 obj.centroidTrajectoryIncrease(:, :, t) = sum(obj.centroidTrajectoryIncrease(:, :, 1 : t), 3);
             end
-        end
+        end      
+        
                 
         
         function saveVideoCombinedImage(obj, fileName)
