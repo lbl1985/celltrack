@@ -18,7 +18,7 @@ datapath = fullfile(workingpath, '01database', 'vivo');
 %     clear vt
 % end
 
-%% cellCount Section
+%% cellCount Section: centroid Trajectory Increamental Video
 clear
 if ispc 
     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
@@ -43,7 +43,7 @@ for i = 1 : n
     saver1.save(blobDetector.centroidTrajectoryIncrease);
     clear saver1
 end
-%% 
+%% centroidTrajectory Combine Section
 clear
 load video_15.mat
 v15.medianFilter();
