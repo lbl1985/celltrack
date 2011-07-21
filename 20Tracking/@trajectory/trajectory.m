@@ -1,17 +1,22 @@
-classdef trajectory < dlnode
-    %TRAJECTORY Summary of this class goes here
+classdef trajectory
+    %I may need to duplicate the trajectory, therefore, make this class as
+    %value type.
     %   Detailed explanation goes here
     
     properties
-        id
-        blobTrajecotry
+        id = 0
+        lastFrameId = 0
+        listLength = 0
+        blobTrajecotry = []
     end
     
     methods
-        function n = trajectory(id, blobCell)
-            if nargin == 0
-                id = 0;
-                blobCell = [];
+        function obj = trajectory(id, blobCell)
+            if nargin ~= 0
+                obj.id = id;
+                obj.blobTrajecotry = blobCell;
+                obj.lastFrameId = blobCell.appearInFrame;
+                obj.listLength = 1;
             end
         end
     end
