@@ -8,8 +8,6 @@ classdef blobCell
         appearLocation
         appearBoundingBox
         appearSize 
-        blobPrev
-        blobNext
     end
     
     methods
