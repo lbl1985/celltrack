@@ -8,7 +8,7 @@ classdef blobCellFrame
     end
     
     properties (SetAccess = public)
-        searchRadius = 10;
+        searchRadius = 20;
     end
     
     methods

@@ -41,7 +41,8 @@ classdef pickCell < handle
                                 (pickedCellTemp(i));
                             qualifyId = find(indFrame(:, i));
                             % traj is on top of blobs
-                            if i <= obj.QueryTrajLength
+                            if i <= obj.QueryTrajLength 
+                                obj.trajUpdateTraj();
                                 for j = 1 : length(qualifyId)
                                     obj.trajArrCurrFrame(i).add(obj.blobsGroupedByFrame(t + 1).frameBlobs(qualifyId(j)));
                                     tmpId = length(obj.tmpTrajArrCurrFrame) + 1;
@@ -83,7 +84,9 @@ classdef pickCell < handle
         
     end   
     
-    methods % supporting functions    
+    methods % supporting functions  
+        function trajUpdateTraj()
+        end
         function tmpId = updateTmpTrajArrCurrFrameTraj(obj)
             if isempty(obj.tmpTrajArrCurrFrame), tmpId = 1;
             else tmpId = length(obj.tmpTrajArrCurrFrame) + 1; end            
