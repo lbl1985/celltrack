@@ -24,18 +24,24 @@ classdef pickCell
             end
         end
         
-        function pickCellPerFrame(obj)                
-            for t = 1 : obj.nFrame -1
-                obj.frameId = t;
-                [pickedCellTemp pickedCellTempLen indFrame] = obj.assembleReadyToTestBlobs();
-                % empty this list everytime after I used it.
-%                 obj.pickedIdNeedTestInNextFrame = [];
-                
-                for i = 1 : pickedCellTempLen
-                    indFrame(:, i) = obj.blobsGroupedByFrame(t + 1).queryDistanceTest...
-                        (pickedCellTemp(i));
+        function pickCellPerFrame(obj)  
+            try
+                for t = 1 : obj.nFrame -1
+                    obj.frameId = t;
+                    [pickedCellTemp pickedCellTempLen] = obj.assembleReadyToTestBlobs();
+                    % empty this list everytime after I used it.
+                    if ~isempty(obj.blobsGroupedByFrame(t + 1).frameBlobs)
+                        indFrame = zeros(length(obj.blobsGroupedByFrame(t+1).frameBlobs), pickedCellTempLen);                    
+                        for i = 1 : pickedCellTempLen
+                            indFrame(:, i) = obj.blobsGroupedByFrame(t + 1).queryDistanceTest...
+                                (pickedCellTemp(i));
+                        end
+                    end
+
                 end
-                
+            catch ME
+                display(['t = ' num2str(t)]);
+                display(ME.message);
             end
             
         end
@@ -43,7 +49,7 @@ classdef pickCell
     end   
     
     methods % supporting functions
-        function [pickedCellTemp pickedCellTempLen indFrame] = assembleReadyToTestBlobs(obj)
+        function [pickedCellTemp pickedCellTempLen] = assembleReadyToTestBlobs(obj)
             % assemble picked cells
             pickedCellTemp = [];    pickedCellTempLen = 0;  indFrame = [];
             if ~isempty(obj.trajArrCurrFrame)

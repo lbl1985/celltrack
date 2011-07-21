@@ -21,15 +21,15 @@ classdef blobCellFrame
         
         function isQulified = queryDistanceTest(obj, requirerCellDecided)            
             aimPosition = structField2Vector(obj.frameBlobs, 'appearLocation');
-            shooterPosition = repmat(requirerCellDecided.Centroid, size(aimPosition, 1), 1);
+            shooterPosition = repmat(requirerCellDecided.appearLocation, size(aimPosition, 1), 1);
             
-            distance = vectorDistance(aimPosition - shooterPosition);
-            isQulified = distance > obj.searchRadius;
+            distance = obj.vectorDistance(aimPosition - shooterPosition);
+            isQulified = distance < obj.searchRadius;
         end                
     end
     
     methods % supporting functions
-        function distance = vectorDistance(rowvec)
+        function distance = vectorDistance(obj, rowvec)
         % calculate Euclidean distance for each row.
             nrow = size(rowvec, 1);
             distance = zeros(nrow, 1);
