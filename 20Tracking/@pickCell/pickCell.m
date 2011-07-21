@@ -7,6 +7,8 @@ classdef pickCell
         nFrame
         pickedCells
         pickedIdNeedTestInNextFrame
+        trajArrInVideo
+        trajArrCurrFrame
     end
     
     properties (SetAccess = public)
@@ -24,11 +26,13 @@ classdef pickCell
         
         function pickCellPerFrame(obj)                
             for t = 1 : obj.nFrame
-                [pickedCellTemp pickedCellTempLen] = assembleReadyToTestBlobs();
+                [pickedCellTemp pickedCellTempLen indFrame] = assembleReadyToTestBlobs();
                 % empty this list everytime after I used it.
-                obj.pickedIdNeedTestInNextFrame = [];
+%                 obj.pickedIdNeedTestInNextFrame = [];
+                
                 for i = 1 : pickedCellTempLen
-                    obj.blobsGroupedByFrame(t).queryDistanceTest(pickedCellTemp(i));
+                    indFrame(:, i) = obj.blobsGroupedByFrame(t).queryDistanceTest...
+                        (pickedCellTemp(i));
                 end
                 
             end
@@ -38,28 +42,33 @@ classdef pickCell
     end   
     
     methods % supporting functions
-        function [pickedCellTemp pickedCellTempLen] = assembleReadyToTestBlobs(obj)
+        function [pickedCellTemp pickedCellTempLen indFrame] = assembleReadyToTestBlobs(obj)
             % assemble picked cells
-            if ~isempty(obj.pickedIdNeedTestInNextFrame)
-                pickedCellTemp = obj.pickedCells(obj.pickedIdNeedTestInNextFrame);
+            if ~isempty(obj.trajArrCurrFrame)
+                pickedCellTemp = obj.getTestTraj();
             end
             
+            nBlobs = length(obj.blobsGroupedByFrame(obj.frameId));
             % assemble current frame blobs.
-            if ~isempty(obj.blobsGroupedByFrame(obj.frameId))
-                pickedCellTemp = cat(1, pickedCellTemp, ...
-                    obj.copyFromBlobCellFrameToCellDecided(obj.blobsGroupedByFrame(obj.frameId)));
+            if nBlobs ~= 0;
+                pickedCellTemp = cat(1, pickedCellTemp, obj.blobsGroupedByFrame(obj.frameId));
             end
             pickedCellTempLen = length(pickedCellTemp);
+            indFrame = zeros(nBlobs, pickedCellTempLen);
         end
         
         % convert data from class blobCell to cellDecided
-        function frameBlobDecided = copyFromBlobCellFrameToCellDecided(frameBlobs)
-            nBlobs = length(frameBlobs);
-            frameBlobDecided = repmat(cellDecided(), nBlobs, 1);
-            for i = 1 : nBlobs
-                frameBlobDecided.copyFromSuperClass(frameBlobs(i));
-            end
-        end
+%         function frameBlobDecided = copyFromBlobCellFrameToCellDecided(frameBlobs)
+%             nBlobs = length(frameBlobs);
+%             frameBlobDecided = repmat(cellDecided(), nBlobs, 1);
+%             for i = 1 : nBlobs
+%                 frameBlobDecided.copyFromSuperClass(frameBlobs(i));
+%             end
+%         end
+%         Calling Function 
+%                 pickedCellTemp = cat(1, pickedCellTemp, ...
+%                     obj.copyFromBlobCellFrameToCellDecided(obj.blobsGroupedByFrame(obj.frameId)));
+
     end            
 end
 

@@ -39,6 +39,7 @@ classdef trajectory < handle
         function obj = duplicate(anotherTrajectory)
             obj  = anotherTrajectory;
         end
+        
     end
     
 end
