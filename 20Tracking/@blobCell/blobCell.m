@@ -7,7 +7,9 @@ classdef blobCell
         appearInFrame
         appearLocation
         appearBoundingBox
-        appearSize        
+        appearSize 
+        blobPrev
+        blobNext
     end
     
     methods
