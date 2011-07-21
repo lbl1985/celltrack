@@ -1,6 +1,8 @@
 classdef cellDecided < blobCell
     %CELLDECIDED Summary of this class goes here
     %   Detailed explanation goes here
+    % This class may be discarded in the future to be displaced by
+    % trajectory class.
     
     properties
         cellId
