@@ -12,7 +12,7 @@ end
 if tmpId == 1
     obj.tmpTrajArrCurrFrame = tmpVar;
 else
-    obj.tmpTrajArrCurrFrame(tmpId + 1) = tmpVar;
+    obj.tmpTrajArrCurrFrame(tmpId) = tmpVar;
 end
 
 end

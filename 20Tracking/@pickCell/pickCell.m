@@ -36,7 +36,8 @@ classdef pickCell < handle
                 for t = 1 : obj.nFrame -1
                     obj.frameId = t;
                     pickedCellTemp = obj.assembleReadyToTestBlobs();   
-                    obj.createTrajectory(pickedCellTemp);                    
+                    obj.createTrajectory(pickedCellTemp);        
+                    display(['t = ' num2str(t) '; pickedCellTempLen = ' num2str(length(pickedCellTemp))]);
                 end
             catch ME
                 display(['t = ' num2str(t)]);
