@@ -3,7 +3,7 @@ function createTrajectory(obj, pickedCellTemp)
 %   Detailed explanation goes here
 t = obj.frameId;
 pickedCellTempLen = length(pickedCellTemp);
-blobsInNextFrameLen = length(obj.blobsGroupedByFrame(t + 1).frameblobs);
+blobsInNextFrameLen = length(obj.blobsGroupedByFrame(t + 1).frameBlobs);
 if blobsInNextFrameLen ~= 0 && pickedCellTempLen ~= 0
     obj.blobsInNextFrame = obj.blobsGroupedByFrame(t + 1);
     indFrame = zeros(blobsInNextFrameLen, pickedCellTempLen);
@@ -14,9 +14,9 @@ if blobsInNextFrameLen ~= 0 && pickedCellTempLen ~= 0
             obj.updateQueryTraj(qualifyId, i);
         else
             obj.updateQueryBlob(qualifyId);
-        end
-        obj.updateQueryTrajectoryArr();
+        end        
     end
+    obj.updateQueryTrajectoryArr();
 end
         
 end

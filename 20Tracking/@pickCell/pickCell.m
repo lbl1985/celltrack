@@ -40,7 +40,7 @@ classdef pickCell < handle
                 end
             catch ME
                 display(['t = ' num2str(t)]);
-                disp(ME.stack);
+                dispMEstack(ME.stack);
                 display(ME.message);                
             end
             
