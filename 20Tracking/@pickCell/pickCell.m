@@ -14,6 +14,10 @@ classdef pickCell < handle
         QueryTrajLength = 0
     end
     
+    properties
+        blobsInNextFrame
+    end
+    
     properties (SetAccess = public)
         frameId
         searchRadius = 10;
@@ -31,48 +35,8 @@ classdef pickCell < handle
             try
                 for t = 1 : obj.nFrame -1
                     obj.frameId = t;
-                    [pickedCellTemp pickedCellTempLen] = obj.assembleReadyToTestBlobs();
-                    display(['t = ' num2str(t) '; pickedCellTempLen = ' num2str(pickedCellTempLen)]);
-                    % empty this list everytime after I used it.
-                    if ~isempty(obj.blobsGroupedByFrame(t + 1).frameBlobs) && pickedCellTempLen ~= 0
-                        indFrame = zeros(length(obj.blobsGroupedByFrame(t+1).frameBlobs), pickedCellTempLen);                    
-                        for i = 1 : pickedCellTempLen
-                            indFrame(:, i) = obj.blobsGroupedByFrame(t + 1).queryDistanceTest...
-                                (pickedCellTemp(i));
-                            qualifyId = find(indFrame(:, i));
-                            % traj is on top of blobs
-                            if i <= obj.QueryTrajLength 
-                                obj.trajUpdateTraj();
-                                for j = 1 : length(qualifyId)
-                                    obj.trajArrCurrFrame(i).add(obj.blobsGroupedByFrame(t + 1).frameBlobs(qualifyId(j)));
-                                    tmpId = length(obj.tmpTrajArrCurrFrame) + 1;
-                                    if isempty(obj.tmpTrajArrCurrFrame)
-                                        obj.tmpTrajArrCurrFrame = obj.trajArrCurrFrame(i);
-                                    else
-                                        obj.tmpTrajArrCurrFrame(tmpId) = obj.trajArrCurrFrame(i);
-                                    end
-                                end
-                            else
-                                for j = 1 : length(qualifyId)  
-                                    id = length(obj.trajArrInVideo) + 1; 
-                                    if isempty(obj.trajArrInVideo) 
-                                        obj.trajArrInVideo = trajectory(id, obj.blobsGroupedByFrame(t + 1).frameBlobs(qualifyId(j)));
-                                    else
-                                        obj.trajArrInVideo(id) = trajectory(id, obj.blobsGroupedByFrame(t + 1).frameBlobs(qualifyId(j)));
-                                    end
-                                    tmpId = length(obj.tmpTrajArrCurrFrame) + 1;
-                                    if isempty(obj.tmpTrajArrCurrFrame)
-                                        obj.tmpTrajArrCurrFrame = obj.trajArrInVideo(id);
-                                    else
-                                        obj.tmpTrajArrCurrFrame(tmpId) = obj.trajArrInVideo(id);
-                                    end
-                                end
-                            end  
-                            obj.trajArrCurrFrame = obj.tmpTrajArrCurrFrame;
-                            obj.QueryTrajLength = length(obj.trajArrCurrFrame);
-                            obj.tmpTrajArrCurrFrame = [];
-                        end
-                    end
+                    pickedCellTemp = obj.assembleReadyToTestBlobs();   
+                    obj.createTrajectory(pickedCellTemp);                    
                 end
             catch ME
                 display(['t = ' num2str(t)]);
@@ -82,18 +46,12 @@ classdef pickCell < handle
             
         end
         
-    end   
+    end 
     
-    methods % supporting functions  
-        function trajUpdateTraj()
-        end
-        function tmpId = updateTmpTrajArrCurrFrameTraj(obj)
-            if isempty(obj.tmpTrajArrCurrFrame), tmpId = 1;
-            else tmpId = length(obj.tmpTrajArrCurrFrame) + 1; end            
-        end
-%         function tmpId = updateTmpTrajArrCurrFrameBlob(obj, blobId)
-            
-        function [pickedCellTemp pickedCellTempLen] = assembleReadyToTestBlobs(obj)
+    
+    
+    methods % supporting functions 
+        function pickedCellTemp = assembleReadyToTestBlobs(obj)
             % assemble picked cells
             pickedCellTemp = [];    %pickedCellTempLen = 0; 
             for i = 1 : length(obj.trajArrCurrFrame)
@@ -103,13 +61,8 @@ classdef pickCell < handle
             if ~isempty(obj.blobsGroupedByFrame(obj.frameId))
                 tmpBlobs = obj.blobsGroupedByFrame(obj.frameId).frameBlobs;                
                 % assemble current frame blobs.       
-%                 id = length(pickedCellTemp)  + (1 : length(tmpBlobs));
                 pickedCellTemp = cat(1, pickedCellTemp, tmpBlobs);
             end
-            
-%             if ~isempty(pickedCellTemp)
-                pickedCellTempLen = length(pickedCellTemp);                
-%             end
         end
     end            
 end
