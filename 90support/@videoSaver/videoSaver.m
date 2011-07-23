@@ -8,17 +8,19 @@ classdef videoSaver < handle
         frameRate
         clrmap
         aviobj
-        fig
+        
     end
     
     properties (SetAccess = public)
         fbeg = 1;
         fend
+        fig
     end 
     
     methods
         function obj = videoSaver(requiredName, requiredFrameRate)
-            obj.movieFile = requiredName;
+            if isempty(requiredName), obj.movieFile = 'trial1.avi';
+            else obj.movieFile = requiredName;  end
             obj.frameRate = requiredFrameRate;
             obj.aviobj = avifile(obj.movieFile, 'fps', obj.frameRate, ...
                 'compression', 'none');            
@@ -44,6 +46,10 @@ classdef videoSaver < handle
                 title(['Frame ' num2str(t)]);   pause(1/22); 
                 obj.saveCore();
             end
+            obj.aviobj = close(obj.aviobj);
+        end
+        
+        function saveClose(obj)
             obj.aviobj = close(obj.aviobj);
         end
             
