@@ -1,12 +1,9 @@
 function blobTrackingFunc(fg)
+% input fg should be uint8 
+
 record = 0;
-
-
-
 [~, ~, nFrame] = size(fg);
-
 nSeg = zeros(nFrame, 1);
-% PixelThreshold = 3000;
 areaThreshold = 5;
 DB = {};
 ID = 1;
@@ -18,23 +15,14 @@ if record
 end
 
 for t = 1 : nFrame
-    % for t = 58
-    figure(1);
-    % Read from Video
-    % I = read(vobj, t); I = rgb2gray(I);
-    % Read from .mat file
-    I = fg(:, :, t); I = uint8(I);
-    
-    imshow(I, 'border', 'tight');
-    Ifilt = I;
-%     Ifilt = medfilt2(I); Ifilt = medfilt2(Ifilt);
-    rectShow = figure(2); imshow(Ifilt, 'border', 'tight');
+    Ifilt = fg(:, :, t);    
+    rectShow = figure(1); imshow(Ifilt, 'border', 'tight');
     STATS = regionprops(Ifilt>0);
     nSeg(t) = length(STATS);
     
     % In order to get rid of mass bg subtraction problem in the first
     % several frames, need to do DB clean up after 20 frames
-    if t == 20
+    if t == 1
         % Well, don't need t, and STATS at all. Just to fit in the
         % interface.
         DB = databaseFuncCell(t, DB, 'cleanUpBeginning', STATS);
@@ -82,5 +70,3 @@ end
 if record
     aviobj = close(aviobj);
 end
-
-display(['Finish ID ' num2str(id)]);
