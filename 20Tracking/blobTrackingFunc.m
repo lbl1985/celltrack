@@ -29,7 +29,7 @@ for t = 1 : nFrame
     end
     
     if nSeg(t) ~= 0
-        % timsslot is varable to same information at frame t.
+        % timeslot is varable to same information at frame t.
         % with all fields in STATS plus trakcingID;
         %         timeslot = STATS;
         % if Area is less than areaThreshold Pixels, set the Area equals to
