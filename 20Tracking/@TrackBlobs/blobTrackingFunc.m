@@ -3,7 +3,7 @@ function  blobTrackingFunc(obj)
 %   Detailed explanation goes here
 
 if obj.record
-    moviefile = [obj.videoName{id}(1:end - 4) '_blobTracking.avi']; framerate = 5;
+    moviefile = [obj.videoName '_blobTracking.avi']; framerate = 5;
     aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
 end
 
@@ -63,9 +63,5 @@ end
 if obj.record
     aviobj = close(aviobj);
 end
-
-
-
-
 end
 
