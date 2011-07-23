@@ -19,7 +19,8 @@ classdef videoVar < handle
     methods
         function obj = videoVar(inputData)
             if nargin > 0
-                obj.Data = inputData;
+                % for video, all should be uint8
+                obj.Data = uint8(inputData);
                 obj.siz = size(obj.Data);
                 obj.ndim = length(obj.siz);
                 obj.nFrame = obj.siz(obj.ndim);
