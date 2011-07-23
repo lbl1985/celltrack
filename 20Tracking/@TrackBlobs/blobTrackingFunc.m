@@ -9,7 +9,6 @@ end
 
 for t = 1 : obj.fg.nFrame
     Ifilt = obj.fg.Data(:, :, t);    
-    rectShow = figure(1); imshow(Ifilt, 'border', 'tight');
     STATS = regionprops(Ifilt>0);
     obj.nSeg(t) = length(STATS);
     
@@ -37,16 +36,13 @@ for t = 1 : obj.fg.nFrame
             tBlob = STATS(ind(i));
             if isempty(obj.DB)
                 obj.DB = databaseFuncCell(t, obj.DB, 'add', tBlob, obj.ID);
-                cellBoundingShow(tBlob, obj.ID, rectShow);
                 obj.ID = obj.ID + 1;
             else
                 idQuery = databaseFuncCell(t, obj.DB, 'search', tBlob);
                 if idQuery ~= 0
                     obj.DB = databaseFuncCell(t, obj.DB, 'update', tBlob, idQuery);
-                    cellBoundingShow(tBlob, idQuery, rectShow);
                 else
                     obj.DB = databaseFuncCell(t, obj.DB, 'add', tBlob, obj.ID);
-                    cellBoundingShow(tBlob, obj.ID, rectShow);
                     obj.ID = obj.ID + 1;
                 end
             end
