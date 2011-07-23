@@ -1,4 +1,8 @@
 clear; 
 main_class;
-pickCellObj = pickCell(blobDetector.blobCellFrameVideo);
+trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
+trackBlobsObj.blobTrackingFunc();
+trackBlobsObj.playTrackingBlobs();
+% pickCellObj = pickCell(blobDetector.blobCellFrameVideo);
+
 % pickCellObj.pickCellPerFrame

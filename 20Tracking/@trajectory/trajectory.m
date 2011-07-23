@@ -24,9 +24,8 @@ classdef trajectory < handle
                    obj.id = inputObject.id;
                    obj.lastFrameId = inputObject.lastFrameId;
                    obj.listLength = inputObject.listLength;
-                   obj.blobTrajectory = inputObject.blobTrajectory;
+                   obj.blobTrajectory = inputObject.blobTrajectory;               
                end
-                   
             end
         end
         
