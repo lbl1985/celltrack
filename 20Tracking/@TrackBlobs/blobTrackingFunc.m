@@ -2,11 +2,6 @@ function  blobTrackingFunc(obj)
 %BLOBTRACKINGFUNC Summary of this function goes here
 %   Detailed explanation goes here
 
-if obj.record
-    moviefile = [obj.videoName '_blobTracking.avi']; framerate = 5;
-    aviobj = avifile(moviefile, 'fps', framerate', 'compression', 'none');
-end
-
 for t = 1 : obj.fg.nFrame
     Ifilt = obj.fg.Data(:, :, t);    
     STATS = regionprops(Ifilt>0);
@@ -48,16 +43,7 @@ for t = 1 : obj.fg.nFrame
             end
         end
     end
-    
-    if obj.record
-        frame = getframe(gcf);
-        aviobj = addframe(aviobj, frame);
-    end
     display(['Frame ' num2str(t)]);
-end
-
-if obj.record
-    aviobj = close(aviobj);
 end
 end
 
