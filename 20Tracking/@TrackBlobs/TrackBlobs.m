@@ -5,11 +5,15 @@ classdef TrackBlobs < handle
     properties
         fg  
         fgAfterClosing
-        nSeg = []
-
-        DB = {};
+        nSeg = []        
         ID = 1;        
     end
+    
+    properties
+        DB = {};
+        DBbyFrame
+    end
+        
     
     properties (SetAccess = public)
         record = 0;
@@ -21,13 +25,12 @@ classdef TrackBlobs < handle
         function obj = TrackBlobs(inputForeGround)
             obj.fg = videoVar(inputForeGround);   
             obj.nSeg = zeros(obj.fg.nFrame, 1);
-        end        
-        
-%         function OpenClosingProcessFunc(obj)
-%             tmp = OpenClosingProcess(obj.fg.Data);
-%             obj.fgAfterClosing = videoVar(tmp);
-%         end
-        
+        end    
+        % function blobTrackingFunc
+        % function DBSortByFrame
+        % function OpenClosingProcess
+        % function playTrackingBlobs
+        % function saveTrackingBlobs
     end
 end
 
