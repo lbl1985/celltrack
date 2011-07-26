@@ -1,22 +1,10 @@
 function DBMerge(obj)
     % length of db is dynamically changed according to merge operation
     dbIndex = 1;
-    while dbIndex < length(obj.DB) - 1
-%     for dbIndex = 1 : (length(obj.DB) - 1)
-        try
-            nEntry = length(obj.DB{dbIndex});
-        catch ME
-            dispMEstack(ME.stack);
-            display(['dbIndex = ' num2str(dbIndex)]);
-        end
-        
-        if nEntry < 3
-            try
-                findNeighborTrajectory(obj, dbIndex);
-            catch ME
-                dispMEstack(ME.stack);
-                display(['dbIndex = ' num2str(dbIndex)]);
-            end
+    while dbIndex < length(obj.DB) - 1        
+        nEntry = length(obj.DB{dbIndex});        
+        if nEntry < 3            
+            findNeighborTrajectory(obj, dbIndex);                        
         end
         dbIndex = dbIndex + 1;
     end
@@ -25,10 +13,9 @@ end
 function findNeighborTrajectory(obj, dbIndex)
     dbEntry = obj.DB{dbIndex};
     beginTimeIDX = dbEntry.timeIDX(end);
-    testIndex = dbIndex + 1;
-    timeSearchScope = 2;
+    testIndex = dbIndex + 1;    
     while testIndex < length(obj.DB) && obj.DB{testIndex}.timeIDX(1) <= ...
-            beginTimeIDX + timeSearchScope && ...
+            beginTimeIDX + obj.timeSearchScope && ...
             obj.DB{testIndex}.timeIDX(1) > beginTimeIDX
             
         
