@@ -12,11 +12,8 @@ fgOpenClosing = uint8(zeros(size(fgVideo)));
 se = strel('ball', 5, 5);
 for i = 1 : nframes
     tfg = fgVideo(:, :, i);
-    figure(1); subplot(1, 3, 1); imshow(uint8(tfg));    title('orig Image');
     tfg_dilate = imdilate(tfg, se);
-    subplot(1, 3, 2); imshow(uint8(tfg_dilate)); title('fg dilate');
     tfg_erode = imerode(tfg_dilate, se);
-    subplot(1, 3, 3); imshow(uint8(tfg_erode)); title('fg erode');
     fgOpenClosing(:, :, i) = uint8(tfg_erode);
 end
     
