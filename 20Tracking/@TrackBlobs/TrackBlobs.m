@@ -17,6 +17,7 @@ classdef TrackBlobs < handle
     
     properties (SetAccess = public)
         record = 0;
+        searchRadius = 10;
         areaThreshold = 5;
         videoName = [];
     end
