@@ -23,10 +23,10 @@ classdef TrackBlobs < handle
             obj.nSeg = zeros(obj.fg.nFrame, 1);
         end        
         
-        function OpenClosingProcessFunc(obj)
-            tmp = OpenClosingProcess(obj.fg.Data);
-            obj.fgAfterClosing = videoVar(tmp);
-        end
+%         function OpenClosingProcessFunc(obj)
+%             tmp = OpenClosingProcess(obj.fg.Data);
+%             obj.fgAfterClosing = videoVar(tmp);
+%         end
         
     end
 end
