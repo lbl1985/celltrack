@@ -3,7 +3,8 @@ function  blobTrackingFunc(obj)
 %   Detailed explanation goes here
 
 for t = 1 : obj.fg.nFrame
-    Ifilt = obj.fg.Data(:, :, t);    
+    Ifilt = obj.fgAfterClosing.Data(:, :, t);
+%     Ifilt = obj.fg.Data(:, :, t);    
     STATS = regionprops(Ifilt>0);
     obj.nSeg(t) = length(STATS);
     

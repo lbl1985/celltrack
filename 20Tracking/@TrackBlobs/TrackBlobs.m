@@ -3,7 +3,8 @@ classdef TrackBlobs < handle
     %   Detailed explanation goes here
     
     properties
-        fg        
+        fg  
+        fgAfterClosing
         nSeg = []
 
         DB = {};
@@ -20,7 +21,13 @@ classdef TrackBlobs < handle
         function obj = TrackBlobs(inputForeGround)
             obj.fg = videoVar(inputForeGround);   
             obj.nSeg = zeros(obj.fg.nFrame, 1);
+        end        
+        
+        function OpenClosingProcessFunc(obj)
+            tmp = OpenClosingProcess(obj.fg.Data);
+            obj.fgAfterClosing = videoVar(tmp);
         end
+        
     end
 end
 
