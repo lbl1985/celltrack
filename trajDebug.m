@@ -9,6 +9,6 @@ trackBlobsObj.DBMergeLocation();
 % TODO Dynamics
 trackBlobsObj.DBMergeDynamics();
 trackBlobsObj.DBSortByFrame();
-trackBlobsObj.playTrackingBlobs();
-trackBlobsObj.videoName = 'trial6.avi';
+% trackBlobsObj.playTrackingBlobs();
+trackBlobsObj.videoName = 'video17_trial1.avi';
 trackBlobsObj.saveTrackingBlobs;
