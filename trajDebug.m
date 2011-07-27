@@ -10,3 +10,5 @@ trackBlobsObj.DBMergeLocation();
 trackBlobsObj.DBMergeDynamics();
 trackBlobsObj.DBSortByFrame();
 trackBlobsObj.playTrackingBlobs();
+trackBlobsObj.videoName = 'trial6.avi';
+trackBlobsObj.saveTrackingBlobs;
