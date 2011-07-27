@@ -1,4 +1,4 @@
-function DBMerge(obj)
+function DBMergeLocation(obj)
     % length of db is dynamically changed according to merge operation
     dbIndex = 1;
     while dbIndex < length(obj.DB) - 1        
@@ -21,7 +21,7 @@ function findNeighborTrajectory(obj, dbIndex)
         
         isLocationQualify = checkLocation(obj, dbIndex, testIndex);
         if isLocationQualify
-            mergeTrajectory(obj, dbIndex, testIndex);
+            obj.mergeTrajectory(dbIndex, testIndex);
         else
             testIndex = testIndex + 1;
         end
@@ -36,18 +36,6 @@ function isLocationQualify = checkLocation(obj, dbIndex, testIndex)
     if mov < obj.searchRadius
         isLocationQualify = 1;
     end
-end
-
-function mergeTrajectory(obj, dbIndex, testIndex)
-    query = obj.DB{dbIndex};
-    test = obj.DB{testIndex};
-    query.timeIDX = vertcat(query.timeIDX, test.timeIDX);
-    query.BoundingBox = vertcat(query.BoundingBox, test.BoundingBox);
-    query.Centroid = vertcat(query.Centroid, test.Centroid);
-    query.Area = vertcat(query.Area, test.Area);
-    obj.DB{dbIndex} = query;
-    obj.DB{testIndex} = [];
-    obj.DB = removeEmptyCell(obj.DB);
 end
 
 

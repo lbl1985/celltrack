@@ -3,8 +3,8 @@ main_class;
 trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
 trackBlobsObj.OpenClosingProcess();
 trackBlobsObj.blobTrackingFunc();
-trackBlobsObj.DBMerge();
-trackBlobsObj.DBMerge();
+trackBlobsObj.DBMergeLocation();
+trackBlobsObj.DBMergeLocation();
 % TODO Dynamics
 trackBlobsObj.DBSortByFrame();
 trackBlobsObj.playTrackingBlobs();
