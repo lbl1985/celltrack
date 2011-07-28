@@ -35,11 +35,8 @@ function isDynamicsQualify = checkEachTestIndex(obj, dbIndex, testIndex)
     isBegin = checkIsBegin(queryEntry, testEntry);
     isDynamicsQualify = 0;
     if isBegin
-        kHankel = Hankel([queryEntry.Centroid' testEntry.Centroid']);
-        kHankel.calculateHankelWindowSize;
-        kHankel.hankelConstruction;
-        kHankel.dynamicsAnalyse;
-        kHankel.checkDynamics;        
+        kHankel = SameFrameDynamics([queryEntry.Centroid' testEntry.Centroid']);
+        kHankel.mainCheckDynamics;
         if kHankel.isDynamicsQualify
             obj.mergeTrajectory(dbIndex, testIndex);
         end
