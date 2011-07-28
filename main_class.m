@@ -19,7 +19,7 @@
 % end
 
 %% cellCount Section: centroid Trajectory Increamental Video
-clear
+clear; close all;
 if ispc 
     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
 else

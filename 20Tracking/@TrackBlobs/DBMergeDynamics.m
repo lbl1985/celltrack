@@ -1,5 +1,9 @@
 function DBMergeDynamics(obj)
-    % length of db is dynamically changed according to merge operation
+    sameFrameDynamicsMerge(obj);
+    differentFrameDynamicsMerge(obj);
+end
+
+function sameFrameDynamicsMerge(obj)
     dbIndex = 1;    
     while dbIndex < length(obj.DB) - 1        
         nEntry = length(obj.DB{dbIndex}.timeIDX);        
@@ -10,6 +14,32 @@ function DBMergeDynamics(obj)
         dbIndex = dbIndex + 1;
     end
 end
+
+function differentFrameDynamicsMerge(obj)
+    dbIndex = 1;
+    while dbIndex < length(obj.DB) - 1
+        findDynamicsIdenticalInDiffFrame(obj, dbIndex);
+        dbIndex = dbIndex + 1;
+    end
+end
+    
+function findDynamicsIdenticalInDiffFrame(obj, dbIndex)
+    queryEntry = obj.DB{dbIndex};
+    testIndex = dbIndex + 1;
+    while testIndex < length(obj.DB) - 1
+        testEntry = obj.DB{testIndex};
+        kHankel = DiffFrameDynamics([queryEntry.Centroid' testEntry.Centroid']);
+        kHankel.mainCheckDynamics;
+        if kHankel.isDynamicsQualify
+            obj.mergeTrajectory(dbIndex, testIndex);
+        else
+            testIndex = testIndex + 1;
+        end
+    end
+        
+end
+
+
 
 function dbIndex = findDynamcisIdenticalInSameFrame(obj, dbIndex)
     timeNow = obj.DB{dbIndex}.timeIDX;
