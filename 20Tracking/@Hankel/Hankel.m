@@ -1,4 +1,4 @@
-classdef Hankel
+classdef Hankel < handle
     %HANKEL Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -12,7 +12,7 @@ classdef Hankel
         U
         S
         V
-        isDynamicsQualified = 0
+        isDynamicsQualify = 0
     end
     
     methods
@@ -29,8 +29,8 @@ classdef Hankel
         end
         
         function hankelConstruction(obj)
-            idx = hankel(1:obj.HankelWindowSize, ...
-                obj.HankelWindowSize:size(obj.matrixForHankel, 2));
+            idx = hankel(1:obj.hankelWindowSize, ...
+                obj.hankelWindowSize:size(obj.matrixForHankel, 2));
             k = obj.matrixForHankel(:, idx);
             obj.hankelMatrix = reshape(k, size(idx, 1) * size(k, 1), size(idx, 2));
         end
@@ -47,7 +47,7 @@ classdef Hankel
         function checkDynamics(obj)
             rankOrder = dynamicsCriteria(obj);
             if rankOrder == 1
-                obj.isDynamicsQualified = 1;
+                obj.isDynamicsQualify = 1;
             end
         end            
     end    

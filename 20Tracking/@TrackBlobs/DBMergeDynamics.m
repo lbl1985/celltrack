@@ -35,11 +35,12 @@ function isDynamicsQualify = checkEachTestIndex(obj, dbIndex, testIndex)
     isBegin = checkIsBegin(queryEntry, testEntry);
     isDynamicsQualify = 0;
     if isBegin
-        kHankel = DynamicsHankelConstruction(queryEntry, testEntry);
-        [~, S, ~] = svd(kHankel);
-        isDynamicsQualify = checkDynamics(diag(S));
-        
-        if isDynamicsQualify
+        kHankel = Hankel([queryEntry.Centroid' testEntry.Centroid']);
+        kHankel.calculateHankelWindowSize;
+        kHankel.hankelConstruction;
+        kHankel.dynamicsAnalyse;
+        kHankel.checkDynamics;        
+        if kHankel.isDynamicsQualify
             obj.mergeTrajectory(dbIndex, testIndex);
         end
     end
@@ -47,26 +48,7 @@ end
 
 function isBegin = checkIsBegin(queryEntry, testEntry)
     isBegin = queryEntry.timeIDX(end) == testEntry.timeIDX(1);
-end
-
-function kHankel = DynamicsHankelConstruction(queryEntry, testEntry)
-    tmpCoordinateArray = [queryEntry.Centroid' testEntry.Centroid'];
-    hankelWindowSize = calculateHankelWindowSize(tmpCoordinateArray);
-    kHankel = hankelConstruction(tmpCoordinateArray, hankelWindowSize);
-end
-
-function hankelWindowSize = calculateHankelWindowSize(inputFeature)
-    hankelWindowSize = ceil(size(inputFeature, 2) / 3);
-end
-
-
-function isDynamicsQualify = checkDynamics(S)
-    isDynamicsQualify = 0;
-    rankOrder = sum(S > mean(S) + std(S)/2);
-    if rankOrder == 1
-        isDynamicsQualify = 1;
-    end
-end    
+end  
 
 function [testIndex dbIndex] = updateTestIndex(testIndex, dbIndex, mergeIndex)
     if mergeIndex < dbIndex
@@ -74,5 +56,3 @@ function [testIndex dbIndex] = updateTestIndex(testIndex, dbIndex, mergeIndex)
     end
     testIndex = testIndex - 1;
 end
-    
-    

@@ -27,7 +27,7 @@ else
 end
 combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
-for i = [1 4 6:11 13:17]
+for i = 4
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
@@ -46,9 +46,9 @@ for i = [1 4 6:11 13:17]
     % TODO Dynamics
     trackBlobsObj.DBMergeDynamics();
     trackBlobsObj.DBSortByFrame();
-    % trackBlobsObj.playTrackingBlobs();
+    trackBlobsObj.playTrackingBlobs();
     trackBlobsObj.videoName = ['video' idName '_trial1.avi'];
-    trackBlobsObj.saveTrackingBlobs;
+%     trackBlobsObj.saveTrackingBlobs;
 %     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
 %     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
 %     saver1.save(blobDetector.centroidTrajectoryIncrease);
