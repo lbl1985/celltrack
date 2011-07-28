@@ -20,6 +20,7 @@ classdef TrackBlobs < handle
         timeSearchScope = 15;
         searchRadius = 10;
         areaThreshold = 5;
+        steadyCriteria = 6;
         videoName = [];
     end
     

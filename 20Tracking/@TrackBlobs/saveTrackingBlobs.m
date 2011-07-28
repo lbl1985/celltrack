@@ -9,6 +9,7 @@ saver1.fig = rectShow;
 
     for t = 1 : obj.fg.nFrame
         I = uint8(obj.fg.Data(:, :, t));
+        I = I > 0.01;
         imshow(I, 'border', 'tight');
         for j = 1 : length(obj.DBbyFrame{t})
             tBlob = obj.DBbyFrame{t}(j);        
