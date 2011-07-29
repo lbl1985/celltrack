@@ -48,7 +48,8 @@ for i = 11
     trackBlobsObj.dbCleanUp();
     trackBlobsObj.DBSortByFrame();
     trackBlobsObj.playTrackingBlobs();
-    trackBlobsObj.videoName = ['video' idName '_trial1.avi'];
+    trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
+    trackBlobsObj.saveTrackingBlobs();
 %     trackBlobsObj.saveTrackingBlobs;
 %     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
 %     saver1 = videoSaver(['video' idName '_increase.avi'], 11);

@@ -14,6 +14,7 @@ saver1.fig = rectShow;
         for j = 1 : length(obj.DBbyFrame{t})
             tBlob = obj.DBbyFrame{t}(j);        
             cellBoundingShow(tBlob, tBlob.ID, rectShow);
+            obj.drawTrajectory(tBlob.ID, t, rectShow);
         end
         disp(['Frame ' num2str(t)]);
         pause(1/22);
