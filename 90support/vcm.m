@@ -1,1 +1,0 @@
-clear; clc; close all; bdclose all; clear global
