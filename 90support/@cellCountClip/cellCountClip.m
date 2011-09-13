@@ -32,7 +32,14 @@ classdef cellCountClip < videoClip
             for t = 1 : obj.nFrame
                 obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [4 4]);
             end
-        end                
+        end  
+        
+        function medianFilter2(obj)
+            for t = 1 : obj.nFrame
+                obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [2 2]);
+            end
+        end
+                
     end  
     
     methods % supporting functions

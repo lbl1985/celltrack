@@ -34,6 +34,7 @@ for i = 11
     command = ['vt = v' idName '; clear v' idName ';'];
     eval(command);
     vt.medianFilter();
+    vt.medianFilter2();
     blobDetector = detectBlob(vt.fg_rpca_median);
     blobDetector.blobDetectionVideo();
     
@@ -49,7 +50,7 @@ for i = 11
     trackBlobsObj.DBSortByFrame();
     trackBlobsObj.playTrackingBlobs();
     trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
-    trackBlobsObj.saveTrackingBlobs();
+%     trackBlobsObj.saveTrackingBlobs();
 %     trackBlobsObj.saveTrackingBlobs;
 %     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
 %     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
