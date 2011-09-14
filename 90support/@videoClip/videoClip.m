@@ -102,6 +102,12 @@ classdef videoClip < handle
             end
         end
         
+        function obj = coverNoiseCloud(obj)
+            for t = 1 : obj.nFrame
+                obj.foreGround_RPCA(135:156, 154 : 171, t) = 0;
+            end
+        end
+        
         function playM_asVideo(obj)
             typeSource = visPrepareFunc(obj);
             for t = 1 : obj.nFrame
