@@ -20,12 +20,15 @@
 
 %% cellCount Section: centroid Trajectory Increamental Video
 clear; close all;
-if ispc 
-    datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
-else
-    datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
-end
-combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
+baseFolder = getProjectBaseFolder();
+datapath = fullfile(baseFolder, 'Results', 'vivo', 'batchRun_object');
+% if ispc 
+%     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
+% else
+%     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
+% end
+% combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
+% combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
 for i = 11
     idName = videoName{i}(7 : end - 4);
