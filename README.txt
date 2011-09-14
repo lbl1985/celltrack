@@ -16,6 +16,7 @@ Instructions:
     projectAddPath(workingpath, 'celltrack');
 6. Copy the data following the instructions in email into folder: 
     Results\vivo\batchRun_object
+    This folder contains bkgd subtraction data objects for each video.
 7. Run main_class.m
 
 
