@@ -33,6 +33,7 @@ for i = 11
     load(fullfile(datapath, videoName{i}));
     command = ['vt = v' idName '; clear v' idName ';'];
     eval(command);
+    vt.coverNoiseCloud();
     vt.medianFilter();
     vt.medianFilter2();
     blobDetector = detectBlob(vt.fg_rpca_median);
