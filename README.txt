@@ -9,13 +9,13 @@ Requirement:
 
 Instructions:
 1. Create folder vivo under .\01database    Output: .\01database\vivo\
-2. copy all the vivo videos into vivo folder, (total 30 videos).
+2. (optional) copy all the vivo videos into vivo folder, (total 30 videos). 
 3. Create folder Results under current folder    Output: .\Results
 4. cd to where you save the files.
 5. type in the following in command window: 
     projectAddPath(workingpath, 'celltrack');
 6. Copy the data following the instructions in email into folder: 
-    Results\vivo\batchRun_object
+    .\Results\vivo\batchRun_object
     This folder contains bkgd subtraction data objects for each video.
 7. Run main_class.m
 
@@ -27,3 +27,4 @@ Notions:
 1. change the i in main_class to play with different videos.
 2. If you install git (version control software), you will be able to read
    all of my developing logs. (details in: http://help.github.com/win-set-up-git/)
+3. home directory (.\) suppose to be where you put your code 
