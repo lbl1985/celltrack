@@ -49,6 +49,12 @@ classdef cellCountClip < videoClip
                 'obj.resultVideoPathCompensation, ''video_' videoID '.mat''), ''v' videoID ''')'];
             eval(command);
         end
+        
+        function obj = coverNoiseCloud(obj)
+            for t = 1 : obj.nFrame
+                obj.foreGround_RPCA(135:156, 154 : 171, t) = 0;
+            end
+        end
     end            
 end
 
