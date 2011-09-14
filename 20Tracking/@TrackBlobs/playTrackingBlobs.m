@@ -13,7 +13,7 @@ for t = 1 : obj.fg.nFrame
         cellBoundingShow(tBlob, tBlob.ID, rectShow);
         obj.drawTrajectory(tBlob.ID, t, rectShow);
     end
-    disp(['Frame ' num2str(t)]);
+    writenum2(t);
     pause(1/22);
 end
 

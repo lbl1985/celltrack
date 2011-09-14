@@ -44,7 +44,7 @@ for t = 1 : obj.fg.nFrame
             end
         end
     end
-    display(['Frame ' num2str(t)]);
+    writenum2(t);
 end
 end
 
