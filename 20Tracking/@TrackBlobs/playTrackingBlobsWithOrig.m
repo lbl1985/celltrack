@@ -19,6 +19,9 @@ for t = 1 : obj.fg.nFrame
         cellBoundingShow(tBlob, tBlob.ID, rectShow, columnOffSet);
         obj.drawTrajectoryWithOrig(tBlob.ID, t, rectShow);
     end
+    if t == 147 || t == 150 || t == 153 || t == 156
+        saveas(rectShow, ['f' num2str(t) '.jpg']);
+    end
     writenum2(t);
     pause(1/22);
 end

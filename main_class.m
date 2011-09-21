@@ -60,7 +60,7 @@ for i = 11
     else
         trackBlobsObj.playTrackingBlobsWithOrig(vt.origVideo);        
         trackBlobsObj.videoName = ['video' idName '_WithTraj_withOrig.avi'];
-        trackBlobsObj.saveTrackingBlobsWithOrig(vt.origVideo);
+%         trackBlobsObj.saveTrackingBlobsWithOrig(vt.origVideo);
     end
 %     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
 %     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
