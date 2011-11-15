@@ -1,66 +1,70 @@
-% clear all; close all; clc;
-% workingpath = which('main_celltrack.m');
-% workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
-% projectAddPath(workingpath, 'celltrack');
-% 
-% datapath = fullfile(workingpath, '01database', 'vivo');
-% [datapath videoName n] = rfdatabase(datapath, [], '.avi');
+clear all; close all; clc;
+workingpath = which('main_celltrack.m');
+workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
+projectAddPath(workingpath, 'celltrack');
+
+% datasetName = 'mouse2_o1';
+datasetName = 'mouse2_o2';
+
+datapath = fullfile(workingpath, '01database', datasetName);
+[datapath videoName n] = rfdatabase(datapath, [], '.avi');
 
 % bkgd subtraction section
-% for id = [1 4 6:11 13:17]
-% % for id = 7    
-%     vt = cellCountClip(datapath, videoName{id});
-%     vt.read_Video();
-%     vt.bkgd_subtraction_MoG();
-%     vt.bkgd_subtraction_rpca();
-% 
-%     vt.saveData();
-%     clear vt
-% end
+for id = 2 : n
+% for id = 7    
+    vt = cellCountClip(datapath, videoName{id});
+    vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batRun_object');
+    vt.read_Video();
+    vt.bkgd_subtraction_MoG();
+    vt.bkgd_subtraction_rpca();
+
+    vt.saveData();
+    clear vt
+end
 
 %% cellCount Section: centroid Trajectory Increamental Video
-clear; close all;
-baseFolder = getProjectBaseFolder();
-datapath = fullfile(baseFolder, 'Results', 'vivo', 'batchRun_object');
-% if ispc 
-%     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
-% else
-%     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
+% clear; close all;
+% baseFolder = getProjectBaseFolder();
+% datapath = fullfile(baseFolder, 'Results', 'vivo', 'batchRun_object');
+% % if ispc 
+% %     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
+% % else
+% %     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
+% % end
+% % combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
+% % combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
+% [datapath videoName n] = rfdatabase(datapath, [], '.mat');
+% for i = 11
+%     idName = videoName{i}(7 : end - 4);
+%     display([idName 'i = ' num2str(i)]);
+%     load(fullfile(datapath, videoName{i}));
+%     command = ['vt = v' idName '; clear v' idName ';'];
+%     eval(command);
+%     vt.coverNoiseCloud();
+%     vt.medianFilter();
+%     vt.medianFilter2();
+%     blobDetector = detectBlob(vt.fg_rpca_median);
+%     blobDetector.blobDetectionVideo();
+%     
+%     trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
+%     trackBlobsObj.OpenClosingProcess();
+%     trackBlobsObj.blobTrackingFunc();
+% 
+%     trackBlobsObj.DBMergeLocation();
+%     trackBlobsObj.DBMergeLocation();
+%     % TODO Dynamics
+%     trackBlobsObj.DBMergeDynamics();
+%     trackBlobsObj.dbCleanUp();
+%     trackBlobsObj.DBSortByFrame();
+%     trackBlobsObj.playTrackingBlobs();
+%     trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
+% %     trackBlobsObj.saveTrackingBlobs();
+% %     trackBlobsObj.saveTrackingBlobs;
+% %     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
+% %     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
+% %     saver1.save(blobDetector.centroidTrajectoryIncrease);
+% %     clear saver1
 % end
-% combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
-% combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
-[datapath videoName n] = rfdatabase(datapath, [], '.mat');
-for i = 11
-    idName = videoName{i}(7 : end - 4);
-    display([idName 'i = ' num2str(i)]);
-    load(fullfile(datapath, videoName{i}));
-    command = ['vt = v' idName '; clear v' idName ';'];
-    eval(command);
-    vt.coverNoiseCloud();
-    vt.medianFilter();
-    vt.medianFilter2();
-    blobDetector = detectBlob(vt.fg_rpca_median);
-    blobDetector.blobDetectionVideo();
-    
-    trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
-    trackBlobsObj.OpenClosingProcess();
-    trackBlobsObj.blobTrackingFunc();
-
-    trackBlobsObj.DBMergeLocation();
-    trackBlobsObj.DBMergeLocation();
-    % TODO Dynamics
-    trackBlobsObj.DBMergeDynamics();
-    trackBlobsObj.dbCleanUp();
-    trackBlobsObj.DBSortByFrame();
-    trackBlobsObj.playTrackingBlobs();
-    trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
-%     trackBlobsObj.saveTrackingBlobs();
-%     trackBlobsObj.saveTrackingBlobs;
-%     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
-%     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
-%     saver1.save(blobDetector.centroidTrajectoryIncrease);
-%     clear saver1
-end
 %% centroidTrajectory Combine Section
 % clear
 % load video_15.mat
