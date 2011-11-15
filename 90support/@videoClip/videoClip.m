@@ -7,7 +7,7 @@ classdef videoClip < handle
         foreGround_RPCA;  
         origVideo;
         
-        ratio = 0.5;
+        
         
         nFrame = 0; 
         videoName;
@@ -17,7 +17,7 @@ classdef videoClip < handle
     properties (SetAccess = public)
       T = 300;              fTb = 3 * 3;   
       nd = 4;        
-      
+      ratio = 0.5;
       playType = 'rpca';
     end
     

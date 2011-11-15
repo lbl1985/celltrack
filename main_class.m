@@ -3,17 +3,23 @@ workingpath = which('main_celltrack.m');
 workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
 projectAddPath(workingpath, 'celltrack');
 
+% ------ Changing dataset HERE ------
 % datasetName = 'mouse2_o1';
 datasetName = 'mouse2_o2';
+% datasetName = 'retro';
+% datasetName = 'tail_vein';
+% ------------------------------------
 
 datapath = fullfile(workingpath, '01database', datasetName);
-[datapath videoName n] = rfdatabase(datapath, [], '.avi');
+[datapath videoName n] = rfdatabase(datapath, [], '.tif');
 
 % bkgd subtraction section
 for id = 2 : n
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batRun_object');
+    checkFolder(vt.resultVideoPathCompensation);
+    vt.ratio = 1;
     vt.read_Video();
     vt.bkgd_subtraction_MoG();
     vt.bkgd_subtraction_rpca();
@@ -25,7 +31,15 @@ end
 %% cellCount Section: centroid Trajectory Increamental Video
 % clear; close all;
 % baseFolder = getProjectBaseFolder();
-% datapath = fullfile(baseFolder, 'Results', 'vivo', 'batchRun_object');
+% 
+% % ------ Changing dataset HERE ------
+% % datasetName = 'mouse2_o1';
+% datasetName = 'mouse2_o2';
+% % datasetName = 'retro';
+% % datasetName = 'tail_vein';
+% % ------------------------------------
+% 
+% datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 % % if ispc 
 % %     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
 % % else
