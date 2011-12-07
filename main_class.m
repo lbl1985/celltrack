@@ -17,7 +17,7 @@ datapath = fullfile(workingpath, '01database', datasetName);
 for id = 2 : n
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
-    vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batRun_object');
+    vt.resultVideoPathCompensation = fullfile(getProjectBaseFolder, 'Results', datasetName, 'batRun_object');
     checkFolder(vt.resultVideoPathCompensation);
     vt.ratio = 1;
     vt.read_Video();

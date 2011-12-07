@@ -68,14 +68,16 @@ else
         end
     else
         
-        mat = uint16(zeros(numrows,numcols, n));
+        mat = uint8(zeros(numrows,numcols, n));
         for i = 1 : n
             I = imread(filename, i);
+            I = round(double(I) / 65535 * 255);
             if ndims(I) == 3
-                mat(:, :, i) = uint16(imresize(rgb2gray(I), [numrows numcols]));
+                mat(:, :, i) = uint8(imresize(rgb2gray(I), [numrows numcols]));
             else
-                mat(:, :, i) = uint16(imresize(I, [numrows numcols]));
+                mat(:, :, i) = uint8(imresize(I, [numrows numcols]));
             end
+            figure(1); imshow(mat(:, :, i), 'border', 'tight');
         end
     end
     
