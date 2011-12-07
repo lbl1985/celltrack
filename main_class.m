@@ -29,56 +29,59 @@ for id = 2 : n
 end
 
 %% cellCount Section: centroid Trajectory Increamental Video
-% clear; close all;
-% baseFolder = getProjectBaseFolder();
-% 
-% % ------ Changing dataset HERE ------
-% % datasetName = 'mouse2_o1';
-% datasetName = 'mouse2_o2';
-% % datasetName = 'retro';
-% % datasetName = 'tail_vein';
-% % ------------------------------------
-% 
-% datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
-% % if ispc 
-% %     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
-% % else
-% %     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
-% % end
-% % combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
-% % combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
-% [datapath videoName n] = rfdatabase(datapath, [], '.mat');
-% for i = 11
-%     idName = videoName{i}(7 : end - 4);
-%     display([idName 'i = ' num2str(i)]);
-%     load(fullfile(datapath, videoName{i}));
-%     command = ['vt = v' idName '; clear v' idName ';'];
-%     eval(command);
-%     vt.coverNoiseCloud();
-%     vt.medianFilter();
-%     vt.medianFilter2();
-%     blobDetector = detectBlob(vt.fg_rpca_median);
-%     blobDetector.blobDetectionVideo();
-%     
-%     trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
-%     trackBlobsObj.OpenClosingProcess();
-%     trackBlobsObj.blobTrackingFunc();
-% 
-%     trackBlobsObj.DBMergeLocation();
-%     trackBlobsObj.DBMergeLocation();
-%     % TODO Dynamics
-%     trackBlobsObj.DBMergeDynamics();
-%     trackBlobsObj.dbCleanUp();
-%     trackBlobsObj.DBSortByFrame();
-%     trackBlobsObj.playTrackingBlobs();
-%     trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
-% %     trackBlobsObj.saveTrackingBlobs();
-% %     trackBlobsObj.saveTrackingBlobs;
-% %     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
-% %     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
-% %     saver1.save(blobDetector.centroidTrajectoryIncrease);
-% %     clear saver1
+clear; close all;
+baseFolder = getProjectBaseFolder();
+
+% ------ Changing dataset HERE ------
+% datasetName = 'mouse2_o1';
+datasetName = 'mouse2_o2';
+% datasetName = 'retro';
+% datasetName = 'tail_vein';
+% ------------------------------------
+
+datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
+% if ispc 
+%     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
+% else
+%     datapath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/batchRun_object';
 % end
+% combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
+% combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
+[datapath videoName n] = rfdatabase(datapath, [], '.mat');
+isVisWithOrig = 1;
+for i = 11
+    idName = videoName{i}(7 : end - 4);
+    display([idName 'i = ' num2str(i)]);
+    load(fullfile(datapath, videoName{i}));
+    command = ['vt = v' idName '; clear v' idName ';'];
+    eval(command);
+    vt.coverNoiseCloud();
+    vt.medianFilter();
+    vt.medianFilter2();
+    blobDetector = detectBlob(vt.fg_rpca_median);
+    blobDetector.blobDetectionVideo();
+    
+    trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
+    trackBlobsObj.OpenClosingProcess();
+    trackBlobsObj.blobTrackingFunc();
+
+    trackBlobsObj.DBMergeLocation();
+    trackBlobsObj.DBMergeLocation();
+    % TODO Dynamics
+    trackBlobsObj.DBMergeDynamics();
+    trackBlobsObj.dbCleanUp();
+    trackBlobsObj.DBSortByFrame();
+    
+    if isVisWithOrig == 0        
+        trackBlobsObj.playTrackingBlobs();
+        trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
+        trackBlobsObj.saveTrackingBlobs();
+    else
+        trackBlobsObj.playTrackingBlobsWithOrig(vt.origVideo);        
+        trackBlobsObj.videoName = ['video' idName '_WithTraj_withOrig.avi'];
+        trackBlobsObj.saveTrackingBlobsWithOrig(vt.origVideo);
+    end
+end
 %% centroidTrajectory Combine Section
 % clear
 % load video_15.mat
