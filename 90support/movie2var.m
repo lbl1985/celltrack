@@ -61,6 +61,7 @@ else
 %     end
     
     if ~isGray
+        % uint8 should be the precision instead of uint16
         mat = uint8(zeros(numrows, numcols ,3, n));
         for i = 1 : n
             I = imread(filename, i);
@@ -72,6 +73,9 @@ else
         
         for i = 1 : n
             I = imread(filename, i);
+            % Normalize the image by convert to uint8 from 16bit images. On
+            % the other hand, this is normalized by L1 norm of the image
+            % values.
             I = uint8(round(double(I) / double(max(I(:))) * 255));
             imshow(I); title(['Frame ' num2str(i)]);  pause(1/22); 
             if ndims(I) == 3
