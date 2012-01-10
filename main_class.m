@@ -1,42 +1,71 @@
-clear all; close all; clc;
-workingpath = which('main_celltrack.m');
-workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
-projectAddPath(workingpath, 'celltrack');
+% clear all; close all; clc;
+% workingpath = which('main_celltrack.m');
+% workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
+% projectAddPath(workingpath, 'celltrack');
+% 
+% % ------ Changing dataset HERE ------
+% % datasetName = 'mouse2_o1_10_14';
+% % datasetName = 'mouse2_o2_10_14';
+% % datasetName = 'retro_10_14';
+% % datasetName = 'tail_vein_10_14';
+% % datasetName = 'mouse2o1';
+% % datasetName = 'mouse1_injection1';
+%  datasetName = 'test';
+% % ------------------------------------
+% datapath = fullfile(workingpath, '01database', datasetName);
+% [datapath videoName n] = rfdatabase(datapath, [], '.tif');
+% 
+% % bkgd subtraction section
+% for id = 3
+% % for id = 7    
+%     vt = cellCountClip(datapath, videoName{id});
+%     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
+%     checkFolder(vt.resultVideoPathCompensation);
+%     vt.ratio = 1;
+%     vt.read_Video();
+%     
+%     % averaging
+%     for m=1:125
+%         for p=1:125
+%             
+%             orig_avg(m,p) = mean(vt.origVideo(m,p,:));
+%            
+%         end
+%     end
+%     
+%     for q=1:1000
+%         vt.origVideo(:,:,q)=vt.origVideo(:,:,q)-uint8(orig_avg);
+%         for x=1:125
+%             for y=1:125
+%                 if vt.origVideo(x,y,q)>=75
+%                     vt.origVideo(x,y,q)=255;
+%                 else
+%                     vt.origVideo(x,y,q)=0;
+%                 end
+%             end
+%         end
+%     end
+%    % vt.origVideo = uint8(vmouse2_inj2_26.foreGround_MoG);
+%     vt.nFrame = 1000;
+%     vt.bkgd_subtraction_MoG();
+%  %   vt.bkgd_subtraction_rpca();
+% 
+%     vt.saveData();
+%     clear vt
+% end
 
-% ------ Changing dataset HERE ------
-% datasetName = 'mouse2_o1';
-datasetName = 'mouse2_o2';
-% datasetName = 'retro';
-% datasetName = 'tail_vein';
-% ------------------------------------
-
-datapath = fullfile(workingpath, '01database', datasetName);
-[datapath videoName n] = rfdatabase(datapath, [], '.tif');
-
-% bkgd subtraction section
-for id = 2 : n
-% for id = 7    
-    vt = cellCountClip(datapath, videoName{id});
-    vt.resultVideoPathCompensation = fullfile(getProjectBaseFolder, 'Results', datasetName, 'batRun_object');
-    checkFolder(vt.resultVideoPathCompensation);
-    vt.ratio = 1;
-    vt.read_Video();
-    vt.bkgd_subtraction_MoG();
-    vt.bkgd_subtraction_rpca();
-
-    vt.saveData();
-    clear vt
-end
-
-%% cellCount Section: centroid Trajectory Increamental Video
+ %% cellCount Section: centroid Trajectory Increamental Video
 clear; close all;
 baseFolder = getProjectBaseFolder();
 
 % ------ Changing dataset HERE ------
-% datasetName = 'mouse2_o1';
-datasetName = 'mouse2_o2';
+% datasetName = 'mouse2_o1_10_14';
+% datasetName = 'mouse2o1';
+% datasetName = 'mouse2_o2';
 % datasetName = 'retro';
 % datasetName = 'tail_vein';
+% datasetName = 'mouse1_injection1';
+datasetName = 'test';
 % ------------------------------------
 
 datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
@@ -48,17 +77,28 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 % combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
 % combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
-isVisWithOrig = 1;
-for i = 11
+for i = 3
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
     command = ['vt = v' idName '; clear v' idName ';'];
     eval(command);
-    vt.coverNoiseCloud();
-    vt.medianFilter();
-    vt.medianFilter2();
-    blobDetector = detectBlob(vt.fg_rpca_median);
+    vt.playType = 'orig'; %'mog'; %'rpca'
+    vt.resultVideoPathCompensation = ['../../Results/' datasetName '/batchRun_object/'];
+%     vt.coverNoiseCloud();
+  vt.medianFilter();
+%  vt.medianFilter2();
+
+    if strcmp(vt.playType, 'rpca');
+%         vt.fg_rpca_median = vt.foreGround_RPCA;
+        blobDetector = detectBlob(vt.fg_rpca_median);
+    elseif strcmp(vt.playType, 'mog');
+        vt.fg_mog_median = vt.foreGround_MoG;
+        blobDetector = detectBlob(vt.fg_mog_median);
+    else
+        vt.fg_mog_median = vt.origVideo;
+        blobDetector = detectBlob(vt.fg_mog_median);
+    end
     blobDetector.blobDetectionVideo();
     
     trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
@@ -71,16 +111,14 @@ for i = 11
     trackBlobsObj.DBMergeDynamics();
     trackBlobsObj.dbCleanUp();
     trackBlobsObj.DBSortByFrame();
-    
-    if isVisWithOrig == 0        
-        trackBlobsObj.playTrackingBlobs();
-        trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
-        trackBlobsObj.saveTrackingBlobs();
-    else
-        trackBlobsObj.playTrackingBlobsWithOrig(vt.origVideo);        
-        trackBlobsObj.videoName = ['video' idName '_WithTraj_withOrig.avi'];
-        trackBlobsObj.saveTrackingBlobsWithOrig(vt.origVideo);
-    end
+    trackBlobsObj.playTrackingBlobs();
+    trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
+    trackBlobsObj.saveTrackingBlobs();
+    trackBlobsObj.saveTrackingBlobs;
+%     blobDetector.saveVideoCombinedImage(fullfile(combinedImagePath, [idName '.jpg']));  
+%     saver1 = videoSaver(['video' idName '_increase.avi'], 11);
+%     saver1.save(blobDetector.centroidTrajectoryIncrease);
+%     clear saver1
 end
 %% centroidTrajectory Combine Section
 % clear

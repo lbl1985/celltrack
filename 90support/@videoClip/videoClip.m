@@ -2,12 +2,10 @@ classdef videoClip < handle
     %VIDEOCLIP Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties (SetAccess = private)
+    properties (SetAccess = public)
         foreGround_MoG;
         foreGround_RPCA;  
         origVideo;
-        
-        
         
         nFrame = 0; 
         videoName;
@@ -15,10 +13,10 @@ classdef videoClip < handle
     end
     
     properties (SetAccess = public)
-      T = 300;              fTb = 3 * 3;   
-      nd = 4;        
-      ratio = 0.5;
-      playType = 'rpca';
+      T = 400;              fTb = 3 * 3;   
+      nd = 2;        
+      ratio = 1;
+      playType = 'mog';
     end
     
     properties (Dependent = true, SetAccess = private)
@@ -122,7 +120,9 @@ classdef videoClip < handle
             videoSave1.save(typeSource);
         end
         
-        
+        function assignOrig(obj, inputVideo)
+            obj.origVideo = inputVideo;
+        end
     end
 end
 

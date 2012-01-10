@@ -61,7 +61,7 @@ else
 %     end
     
     if ~isGray
-        mat = uint16(zeros(numrows, numcols ,3, n));
+        mat = uint8(zeros(numrows, numcols ,3, n));
         for i = 1 : n
             I = imread(filename, i);
             mat(:, :, :, i) = uint16(imresize(I, [numrows numcols]));
@@ -69,15 +69,16 @@ else
     else
         
         mat = uint8(zeros(numrows,numcols, n));
+        
         for i = 1 : n
             I = imread(filename, i);
-            I = round(double(I) / 65535 * 255);
+            I = uint8(round(double(I) / double(max(I(:))) * 255));
+            imshow(I); title(['Frame ' num2str(i)]);  pause(1/22); 
             if ndims(I) == 3
                 mat(:, :, i) = uint8(imresize(rgb2gray(I), [numrows numcols]));
             else
                 mat(:, :, i) = uint8(imresize(I, [numrows numcols]));
             end
-            figure(1); imshow(mat(:, :, i), 'border', 'tight');
         end
     end
     

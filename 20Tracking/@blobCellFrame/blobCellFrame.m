@@ -8,6 +8,7 @@ classdef blobCellFrame
     end
     
     properties (SetAccess = public)
+        % radius of moving cell in number of pixels
         searchRadius = 10;
     end
     
