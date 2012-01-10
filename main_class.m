@@ -106,11 +106,13 @@ for i = 1
         blobDetector = detectBlob(vt.fg_mog_median);
     else
         vt.fg_mog_median = vt.origVideo;
-%         vt.medianFilter();
+        vt.medianFilter();
         blobDetector = detectBlob(vt.fg_mog_median);
     end
     blobDetector.blobDetectionVideo();
     
+    % blobDetector.inputVideoData is the bkgd subtraction result after
+    % medianFilter.
     trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
     trackBlobsObj.OpenClosingProcess();
     trackBlobsObj.blobTrackingFunc();

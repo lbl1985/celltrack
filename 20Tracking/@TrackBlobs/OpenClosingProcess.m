@@ -14,7 +14,8 @@ se = strel('ball', 5, 5);
 for i = 1 : nframes
     tfg = obj.fg.Data(:, :, i);
     tfg_dilate = imdilate(tfg, se);
-    tfg_erode = imerode(tfg_dilate, se);
+    tfg_erode = tfg_dilate;
+%     tfg_erode = imerode(tfg_dilate, se);
     fgOpenClosing(:, :, i) = uint8(tfg_erode);
 end
 obj.fgAfterClosing = videoVar(fgOpenClosing);

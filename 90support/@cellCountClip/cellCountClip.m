@@ -48,14 +48,14 @@ classdef cellCountClip < videoClip
                     obj.fg_rpca_median = obj.foreGround_RPCA;
                 end
                 for t = 1 : obj.nFrame
-                    obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [4 4]);
+                    obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [2 2]);
                 end
             else
                 if ~isempty(obj.foreGround_MoG)
                     obj.fg_mog_median = obj.foreGround_MoG;
                 end
                 for t = 1 : obj.nFrame
-                    obj.fg_mog_median(:, :, t) = medfilt2(obj.fg_mog_median(:, :, t), [4 4]);
+                    obj.fg_mog_median(:, :, t) = medfilt2(obj.fg_mog_median(:, :, t), [2 2]);
                 end
             end
         end  
