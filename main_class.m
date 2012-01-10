@@ -1,67 +1,67 @@
-clear all; close all; clc;
-workingpath = which('main_celltrack.m');
-workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
-projectAddPath(workingpath, 'celltrack');
-
-% ------ Changing dataset HERE ------
-% datasetName = 'mouse2_o1_10_14';
-% datasetName = 'mouse2_o2_10_14';
-% datasetName = 'retro_10_14';
-% datasetName = 'tail_vein_10_14';
-% datasetName = 'mouse2o1';
-% datasetName = 'mouse1_injection1';
- datasetName = 'test';
-% ------------------------------------
-datapath = fullfile(workingpath, '01database', datasetName);
-[datapath videoName n] = rfdatabase(datapath, [], '.tif');
-
-% bkgd subtraction section
-for id = 3
-% for id = 7    
-    vt = cellCountClip(datapath, videoName{id});
-    vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
-    checkFolder(vt.resultVideoPathCompensation);
-    vt.ratio = 1;
-    vt.read_Video();
-    
-    % averaging
-%     tic
-%         for m=1:125
-%             for p=1:125
-%                 orig_avg(m,p) = mean(vt.origVideo(m,p,:));
-%             end
-%         end
-    % This version is much faster than loop. 0.009501s v.s. 0.665266s
-    orig_avg = mean(vt.origVideo, 3);
-%     toc    
-%     tic
-%     for q=1:1000
-%         vt.origVideo(:,:,q)=vt.origVideo(:,:,q)-uint8(orig_avg);
-%         for x=1:125
-%             for y=1:125
-%                 if vt.origVideo(x,y,q)>=75
-%                     vt.origVideo(x,y,q)=255;
-%                 else
-%                     vt.origVideo(x,y,q)=0;
-%                 end
-%             end
-%         end
-%     end
-    vt.storeOrigVideo = vt.origVideo;
-    
-    vt.origVideo = bsxfun(@minus, vt.origVideo, uint8(orig_avg));
-    vt.origVideo = vt.origVideo>= 75;
-    vt.origVideo = uint8(vt.origVideo) * 255;   
-    
-%     toc
-   % vt.origVideo = uint8(vmouse2_inj2_26.foreGround_MoG);
-    vt.nFrame = 1000;
-    vt.bkgd_subtraction_MoG();
- %   vt.bkgd_subtraction_rpca();
-
-    vt.saveData();
-    clear vt
-end
+% clear all; close all; clc;
+% workingpath = which('main_celltrack.m');
+% workingpath = workingpath(1:strfind(workingpath, 'main_celltrack.m') - 1);
+% projectAddPath(workingpath, 'celltrack');
+% 
+% % ------ Changing dataset HERE ------
+% % datasetName = 'mouse2_o1_10_14';
+% % datasetName = 'mouse2_o2_10_14';
+% % datasetName = 'retro_10_14';
+% % datasetName = 'tail_vein_10_14';
+% % datasetName = 'mouse2o1';
+% % datasetName = 'mouse1_injection1';
+%  datasetName = 'test';
+% % ------------------------------------
+% datapath = fullfile(workingpath, '01database', datasetName);
+% [datapath videoName n] = rfdatabase(datapath, [], '.tif');
+% 
+% % bkgd subtraction section
+% for id = 3
+% % for id = 7    
+%     vt = cellCountClip(datapath, videoName{id});
+%     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
+%     checkFolder(vt.resultVideoPathCompensation);
+%     vt.ratio = 1;
+%     vt.read_Video();
+%     
+%     % averaging
+% %     tic
+% %         for m=1:125
+% %             for p=1:125
+% %                 orig_avg(m,p) = mean(vt.origVideo(m,p,:));
+% %             end
+% %         end
+%     % This version is much faster than loop. 0.009501s v.s. 0.665266s
+%     orig_avg = mean(vt.origVideo, 3);
+% %     toc    
+% %     tic
+% %     for q=1:1000
+% %         vt.origVideo(:,:,q)=vt.origVideo(:,:,q)-uint8(orig_avg);
+% %         for x=1:125
+% %             for y=1:125
+% %                 if vt.origVideo(x,y,q)>=75
+% %                     vt.origVideo(x,y,q)=255;
+% %                 else
+% %                     vt.origVideo(x,y,q)=0;
+% %                 end
+% %             end
+% %         end
+% %     end
+%     vt.storeOrigVideo = vt.origVideo;
+%     
+%     vt.origVideo = bsxfun(@minus, vt.origVideo, uint8(orig_avg));
+%     vt.origVideo = vt.origVideo>= 75;
+%     vt.origVideo = uint8(vt.origVideo) * 255;   
+%     
+% %     toc
+%    % vt.origVideo = uint8(vmouse2_inj2_26.foreGround_MoG);
+%     vt.nFrame = 1000;
+% %     vt.bkgd_subtraction_MoG();
+%  %   vt.bkgd_subtraction_rpca();
+% 
+%     vt.saveData();
+%     clear vt
+% end
 
  %% cellCount Section: centroid Trajectory Increamental Video
 clear; close all;
@@ -86,7 +86,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 % combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
 % combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
-for i = 3
+for i = 1
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
