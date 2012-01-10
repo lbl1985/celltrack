@@ -77,7 +77,7 @@ else
             % the other hand, this is normalized by L1 norm of the image
             % values.
             I = uint8(round(double(I) / double(max(I(:))) * 255));
-            imshow(I); title(['Frame ' num2str(i)]);  pause(1/22); 
+            % imshow(I); title(['Frame ' num2str(i)]);  pause(1/22); 
             if ndims(I) == 3
                 mat(:, :, i) = uint8(imresize(rgb2gray(I), [numrows numcols]));
             else
