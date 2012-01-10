@@ -5,12 +5,15 @@ classdef cellCountClip < videoClip
     properties
         fg_rpca_threshold;
         fg_rpca_median;
+        % addin twisting paprameter for mog method.
         fg_mog_threshold;
         fg_mog_median;
     end
     
     properties (SetAccess = public)
 %         resultVideoPathCompensation = '../../Results/vivo/batchRun_object/';
+    % Just put the result Video Path Compensation as null. 
+    % Or, I should put it into some fixed directory.
         resultVideoPathCompensation = [];
     end
     
@@ -20,6 +23,7 @@ classdef cellCountClip < videoClip
         end
         
         function binaryRpca(obj)
+            % no flow to coper playType = 'mog'. Just added here.
             if strcmp(obj.playType, 'rpca')
                 if ~isempty(obj.foreGround_RPCA)
                     obj.fg_rpca_threshold = obj.foreGround_RPCA;
@@ -38,6 +42,7 @@ classdef cellCountClip < videoClip
         end
         
         function medianFilter(obj)
+            % Adding for support for MoG bkgd subtraction.
             if strcmp(obj.playType, 'rpca')
                 if ~isempty(obj.foreGround_RPCA)
                     obj.fg_rpca_median = obj.foreGround_RPCA;
@@ -56,6 +61,7 @@ classdef cellCountClip < videoClip
         end  
         
         function medianFilter2(obj)
+            % Adding for support for MoG bkgd subtraction.
             if strcmp(obj.playType, 'rpca')
                 for t = 1 : obj.nFrame
                     obj.fg_rpca_median(:, :, t) = medfilt2(obj.fg_rpca_median(:, :, t), [2 2]);
@@ -77,6 +83,7 @@ classdef cellCountClip < videoClip
             eval(command);
         end
         
+        % Directly assign video data into filed of object.
         function obj = assignOrig(obj, inputVideo)
             obj.origVideo = inputVideo;
         end
