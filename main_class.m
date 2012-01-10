@@ -33,21 +33,27 @@ for id = 3
 %         end
     % This version is much faster than loop. 0.009501s v.s. 0.665266s
     orig_avg = mean(vt.origVideo, 3);
+%     toc    
+%     tic
+%     for q=1:1000
+%         vt.origVideo(:,:,q)=vt.origVideo(:,:,q)-uint8(orig_avg);
+%         for x=1:125
+%             for y=1:125
+%                 if vt.origVideo(x,y,q)>=75
+%                     vt.origVideo(x,y,q)=255;
+%                 else
+%                     vt.origVideo(x,y,q)=0;
+%                 end
+%             end
+%         end
+%     end
+    vt.storeOrigVideo = vt.origVideo;
+    
+    vt.origVideo = bsxfun(@minus, vt.origVideo, uint8(orig_avg));
+    vt.origVideo = vt.origVideo>= 75;
+    vt.origVideo = uint8(vt.origVideo) * 255;   
+    
 %     toc
-    
-    
-    for q=1:1000
-        vt.origVideo(:,:,q)=vt.origVideo(:,:,q)-uint8(orig_avg);
-        for x=1:125
-            for y=1:125
-                if vt.origVideo(x,y,q)>=75
-                    vt.origVideo(x,y,q)=255;
-                else
-                    vt.origVideo(x,y,q)=0;
-                end
-            end
-        end
-    end
    % vt.origVideo = uint8(vmouse2_inj2_26.foreGround_MoG);
     vt.nFrame = 1000;
     vt.bkgd_subtraction_MoG();

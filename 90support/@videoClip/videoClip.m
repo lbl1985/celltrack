@@ -7,6 +7,7 @@ classdef videoClip < handle
         foreGround_MoG;
         foreGround_RPCA;  
         origVideo;
+        storeOrigVideo;
         
         nFrame = 0; 
         videoName;
