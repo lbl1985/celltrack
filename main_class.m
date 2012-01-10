@@ -95,7 +95,7 @@ for i = 1
     vt.playType = 'orig'; %'mog'; %'rpca'
     vt.resultVideoPathCompensation = ['../../Results/' datasetName '/batchRun_object/'];
 %     vt.coverNoiseCloud();
-  vt.medianFilter();
+%   vt.medianFilter();
 %  vt.medianFilter2();
 
     if strcmp(vt.playType, 'rpca');
@@ -106,6 +106,7 @@ for i = 1
         blobDetector = detectBlob(vt.fg_mog_median);
     else
         vt.fg_mog_median = vt.origVideo;
+%         vt.medianFilter();
         blobDetector = detectBlob(vt.fg_mog_median);
     end
     blobDetector.blobDetectionVideo();
