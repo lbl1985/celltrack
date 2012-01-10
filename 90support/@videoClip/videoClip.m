@@ -2,6 +2,7 @@ classdef videoClip < handle
     %VIDEOCLIP Summary of this class goes here
     %   Detailed explanation goes here
     
+    % Access for the parameters
     properties (SetAccess = public)
         foreGround_MoG;
         foreGround_RPCA;  
@@ -13,6 +14,7 @@ classdef videoClip < handle
     end
     
     properties (SetAccess = public)
+      % Access to all kinds of parameters.
       T = 400;              fTb = 3 * 3;   
       nd = 2;        
       ratio = 1;
@@ -120,6 +122,7 @@ classdef videoClip < handle
             videoSave1.save(typeSource);
         end
         
+        % Access to video data field.
         function assignOrig(obj, inputVideo)
             obj.origVideo = inputVideo;
         end
