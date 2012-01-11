@@ -115,6 +115,8 @@ for i = 1
     % medianFilter.
     trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
     trackBlobsObj.OpenClosingProcess();
+    figure(1); playM_asVideo(trackBlobsObj.fgAfterClosing.Data);
+    
     trackBlobsObj.blobTrackingFunc();
 
     trackBlobsObj.DBMergeLocation();
