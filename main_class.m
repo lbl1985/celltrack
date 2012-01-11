@@ -115,15 +115,18 @@ for i = 1
     % medianFilter.
     trackBlobsObj = TrackBlobs(blobDetector.inputVideoData);
     trackBlobsObj.OpenClosingProcess();
-    figure(1); playM_asVideo(trackBlobsObj.fgAfterClosing.Data);
+%     figure(1); playM_asVideo(trackBlobsObj.fgAfterClosing.Data);
     
     trackBlobsObj.blobTrackingFunc();
 
+    % Merge by Location
     trackBlobsObj.DBMergeLocation();
-    trackBlobsObj.DBMergeLocation();
-    % TODO Dynamics
-    trackBlobsObj.DBMergeDynamics();
+    trackBlobsObj.DBMergeLocation();    
+    % TODO Dynamics    
     trackBlobsObj.dbCleanUp();
+    % Merge by Dynamics
+    trackBlobsObj.DBMergeDynamics();
+    
     trackBlobsObj.DBSortByFrame();
     trackBlobsObj.playTrackingBlobs();
     trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];

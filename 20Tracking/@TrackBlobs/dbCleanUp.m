@@ -1,7 +1,7 @@
 function dbCleanUp(obj)
     cleanUpOnlyOneAppearance(obj);
-    cleanUpSteady(obj);
-    cleanUpUnConsistent(obj);
+%     cleanUpSteady(obj);
+%     cleanUpUnConsistent(obj);
 end
 
 function cleanUpOnlyOneAppearance(obj)
