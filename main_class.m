@@ -128,6 +128,7 @@ for i = 1
     trackBlobsObj.dbCleanUp();
     % Merge by Dynamics
 %     trackBlobsObj.DBMergeDynamics();
+    trackBlobsObj.DBMergeDynamics2();
     
     trackBlobsObj.DBSortByFrame();
     
