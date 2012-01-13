@@ -16,7 +16,7 @@
 % [datapath videoName n] = rfdatabase(datapath, [], '.tif');
 % 
 % % bkgd subtraction section
-% for id = 3
+% for id = 1
 % % for id = 7    
 %     vt = cellCountClip(datapath, videoName{id});
 %     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
@@ -95,7 +95,10 @@ for i = 1
     command = ['vt = v' idName '; clear v' idName ';'];
     eval(command);
     vt.playType = 'orig'; %'mog'; %'rpca'
-    vt.resultVideoPathCompensation = ['../../Results/' datasetName '/batchRun_object/'];
+%     vt.resultVideoPathCompensation = ['../../Results/' datasetName '/batchRun_object/'];
+    resultVideoPath = fullfile(getProjectBaseFolder, 'Results', datasetName, ...
+        'video\');
+    checkFolder(resultVideoPath);
 %     vt.coverNoiseCloud();
 %   vt.medianFilter();
 %  vt.medianFilter2();
@@ -134,11 +137,13 @@ for i = 1
     
     if isVisWithOrig == 0        
         trackBlobsObj.playTrackingBlobs();
-        trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
+        trackBlobsObj.videoName = ['video' idName '_TrajOnly_Time_' ...
+            datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
         trackBlobsObj.saveTrackingBlobs();
     else
         trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
-        trackBlobsObj.videoName = ['video' idName '_WithTraj_withOrig.avi'];
+        trackBlobsObj.videoName = fullfile(resultVideoPath, ...
+            ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
         trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);
     end
     
