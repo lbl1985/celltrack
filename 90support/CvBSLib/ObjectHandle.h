@@ -110,12 +110,13 @@ class Collector {
 	std::list<ObjectHandle<T>*> objlist;
 public:
 	~Collector() {
-		std::list<ObjectHandle<T>*>::iterator i;
-		std::list<ObjectHandle<T>*>::iterator end= objlist.end();
+		typename std::list<ObjectHandle<T>*>::iterator i;
+		typename std::list<ObjectHandle<T>*>::iterator end= objlist.end();
 		for (i= objlist.begin(); i!=end; ++i) {
 			if ((*i)->signature == *i) // check for valid signature
 				delete *i;
 		}
+       mexWarnMsgIdAndTxt("BESTree:ObjectHandle:Collector","Destructor activated");
 	}
 
 	static void register_handle (ObjectHandle<T>* obj) {
