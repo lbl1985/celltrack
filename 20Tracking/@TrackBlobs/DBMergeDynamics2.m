@@ -5,6 +5,8 @@ function DBMergeDynamics2(obj)
         % trajectory shows up. Then directly go to next trajectory as
         % inqury trajectory.
         [qualifyId timeDiff] = qualifyCandidateId(obj, dbIndex, timeSearchRadius);
+        % greedy like search    12/Jan/2012
+        isLocationQualify = 0;
         if ~isempty(qualifyId)
             % Computer the location at the same time as beginning of
             % candidate trajectories.
@@ -21,8 +23,11 @@ function DBMergeDynamics2(obj)
                 end                    
             end
         end
-        
-        dbIndex = dbIndex + 1;        
+        % if merging occurs. still test the same trajectory ID
+        % greedy like search    12/Jan/2012
+        if ~isLocationQualify            
+            dbIndex = dbIndex + 1;        
+        end
     end
 end
 

@@ -88,7 +88,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
 isVisWithOrig = 1;
 
-for i = 1
+for i = 3
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
@@ -141,7 +141,7 @@ for i = 1
             datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
         trackBlobsObj.saveTrackingBlobs();
     else
-        trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
+%         trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
         trackBlobsObj.videoName = fullfile(resultVideoPath, ...
             ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
         trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);
