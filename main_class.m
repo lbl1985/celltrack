@@ -141,7 +141,7 @@ for i = 3
             datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
         trackBlobsObj.saveTrackingBlobs();
     else
-%         trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
+        trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
         trackBlobsObj.videoName = fullfile(resultVideoPath, ...
             ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
         trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);

@@ -8,7 +8,10 @@ function cleanUpOnlyOneAppearance(obj)
     ndb = length(obj.DB);
     keepIndex = true(ndb, 1);
     for i = 1 : ndb
-        if length(obj.DB{i}.timeIDX) == 1
+        % Clean trajectories only show up once
+%         if length(obj.DB{i}.timeIDX) == 1
+        % Clean trajectories only show up once or twice
+        if length(obj.DB{i}.timeIDX) <= 2
             keepIndex(i) = false;
         end
     end
