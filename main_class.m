@@ -16,7 +16,7 @@ datapath = fullfile(workingpath, '01database', datasetName);
 [datapath videoName n] = rfdatabase(datapath, [], '.tif');
 
 % bkgd subtraction section
-for id = 1
+for id = 3
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
@@ -88,7 +88,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
 isVisWithOrig = 1;
 
-for i = 3
+for i = 1
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
