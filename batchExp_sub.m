@@ -120,6 +120,9 @@ for i = 1 : n_var
     
     trackBlobsObj.DBSortByFrame();
     
+    trackBlobsObj.videoName = idName;
+    trackBlobsObj.saveResultsTextFile(bkgdThreshold, atLeastShownUpThreshold, datasetName, i);
+    
     if isShow == 1
         if isVisWithOrig == 0        
             trackBlobsObj.playTrackingBlobs();
