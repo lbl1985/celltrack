@@ -1,0 +1,1 @@
+function saveResultsTextFile(obj, bkgdThreshold, atLeastShownUpThreshold)

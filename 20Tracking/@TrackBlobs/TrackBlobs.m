@@ -34,6 +34,7 @@ classdef TrackBlobs < handle
         % function OpenClosingProcess
         % function playTrackingBlobs
         % function saveTrackingBlobs
+        % function saveResultsTextFile
     end
 end
 
