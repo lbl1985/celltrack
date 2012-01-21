@@ -15,10 +15,11 @@ datapath = fullfile(workingpath, datasetName);
 [datapath videoName n] = rfdatabase(datapath, [], '.tif');
 
 % bkgd subtraction section
-for id = 3
+for id = 1
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
-    vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', 'batchExp', datasetName, 'batchRun_object');
+    % Now, it's not compensation any more. It's the absolut path.
+    vt.resultVideoPathCompensation = fullfile(getProjectBaseFolder, 'Results', 'batchExp', datasetName, 'batchRun_object');
     checkFolder(vt.resultVideoPathCompensation);
     vt.ratio = 1;
     vt.read_Video();

@@ -78,7 +78,7 @@ classdef cellCountClip < videoClip
     methods % supporting functions
         function obj = saveData(obj)
             videoID = obj.videoName(1:end-4);
-            command = ['v' videoID ' = obj; save(fullfile(obj.videoPath, '...
+            command = ['v' videoID ' = obj; save(fullfile('...
                 'obj.resultVideoPathCompensation, ''video_' videoID '.mat''), ''v' videoID ''')'];
             eval(command);
         end
