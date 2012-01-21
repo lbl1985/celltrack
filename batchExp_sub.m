@@ -113,7 +113,7 @@ for i = 1 : n_var
     trackBlobsObj.DBMergeLocation();
     trackBlobsObj.DBMergeLocation();    
     % TODO Dynamics    
-    trackBlobsObj.dbCleanUp();
+    trackBlobsObj.dbCleanUp(atLeastShownUpThreshold);
     % Merge by Dynamics
 %     trackBlobsObj.DBMergeDynamics();
     trackBlobsObj.DBMergeDynamics2();
