@@ -1,4 +1,4 @@
-function batchExp_sub(datasetName, workingpath, bkgdThreshold, atLeastShownUpThreshold)
+function batchExp_sub(datasetName, workingpath, bkgdThreshold, atLeastShownUpThreshold, isShow)
 % workingpath = getProjectBaseFolder;
 % projectAddPath(workingpath, 'celltrack');
 
@@ -12,14 +12,15 @@ function batchExp_sub(datasetName, workingpath, bkgdThreshold, atLeastShownUpThr
 %  datasetName = 'test';
 % ------------------------------------
 datapath = fullfile(workingpath, datasetName);
-[datapath videoName n] = rfdatabase(datapath, [], '.tif');
+[datapath videoName n_video] = rfdatabase(datapath, [], '.tif');
 
 % bkgd subtraction section
-for id = 1
+for id = 1 : n_video
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
     % Now, it's not compensation any more. It's the absolut path.
     vt.resultVideoPathCompensation = fullfile(getProjectBaseFolder, 'Results', 'batchExp', datasetName, 'batchRun_object');
+    savingVideoPathAbsolute = vt.resultVideoPathCompensation;
     checkFolder(vt.resultVideoPathCompensation);
     vt.ratio = 1;
     vt.read_Video();
@@ -49,10 +50,13 @@ baseFolder = getProjectBaseFolder();
 % datasetName = 'retro';
 % datasetName = 'tail_vein';
 % datasetName = 'mouse1_injection1';
-datasetName = 'test';
+% datasetName = 'test';
 % ------------------------------------
 
-datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
+% Direct use the path before to deal with.
+% datapath = fullfile(baseFolder, 'Results', 'batchExp', datasetName, 'batchRun_object');
+datapath = savingVideoPathAbsolute;
+
 % if ispc 
 %     datapath = 'C:\Users\lbl1985\Documents\MATLAB\work\celltrack\Results\vivo\batchRun_object';
 % else
@@ -60,10 +64,16 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 % end
 % combinedImagePath = fullfile(baseFolder, 'Results', 'vivo', 'combinedImage');
 % combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
-[datapath videoName n] = rfdatabase(datapath, [], '.mat');
+[datapath videoName n_var] = rfdatabase(datapath, [], '.mat');
+
+% As the error message, the number of variable should be equal to number of
+% videos.
+if ~isequal(n_var, n_video)
+    error('n_var should be equal to n_video');
+end
 isVisWithOrig = 1;
 
-for i = 3
+for i = 1 : n_var
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
@@ -110,18 +120,19 @@ for i = 3
     
     trackBlobsObj.DBSortByFrame();
     
-    if isVisWithOrig == 0        
-        trackBlobsObj.playTrackingBlobs();
-        trackBlobsObj.videoName = ['video' idName '_TrajOnly_Time_' ...
-            datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
-        trackBlobsObj.saveTrackingBlobs();
-    else
-        trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
-        trackBlobsObj.videoName = fullfile(resultVideoPath, ...
-            ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
-        trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);
+    if isShow == 1
+        if isVisWithOrig == 0        
+            trackBlobsObj.playTrackingBlobs();
+            trackBlobsObj.videoName = ['video' idName '_TrajOnly_Time_' ...
+                datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
+            trackBlobsObj.saveTrackingBlobs();
+        else
+            trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
+            trackBlobsObj.videoName = fullfile(resultVideoPath, ...
+                ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
+            trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);
+        end
     end
-    
 %     trackBlobsObj.playTrackingBlobs();
 %     trackBlobsObj.videoName = ['video' idName '_WithTraj.avi'];
 %     trackBlobsObj.saveTrackingBlobs();
