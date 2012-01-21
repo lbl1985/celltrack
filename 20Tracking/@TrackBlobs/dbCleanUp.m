@@ -1,17 +1,19 @@
-function dbCleanUp(obj)
-    cleanUpOnlyOneAppearance(obj);
+function dbCleanUp(obj, atLeastShownUpThreshold)
+    cleanUpOnlyOneAppearance(obj, atLeastShownUpThreshold);
     cleanUpSteady(obj);
 %     cleanUpUnConsistent(obj);
 end
 
-function cleanUpOnlyOneAppearance(obj)
+function cleanUpOnlyOneAppearance(obj, atLeastShownUpThreshold)
     ndb = length(obj.DB);
     keepIndex = true(ndb, 1);
     for i = 1 : ndb
         % Clean trajectories only show up once
-        if length(obj.DB{i}.timeIDX) == 1
+%         if length(obj.DB{i}.timeIDX) == 1
         % Clean trajectories only show up once or twice
 %         if length(obj.DB{i}.timeIDX) <= 2
+        % Clean trajectories for variable number of apperance
+        if length(obj.DB{i}.timeIDX) <= atLeastShownUpThreshold
             keepIndex(i) = false;
         end
     end
