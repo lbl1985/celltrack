@@ -87,6 +87,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 % combinedImagePath = '/Users/herbert19lee/Documents/MATLAB/work/celltrack/Results/vivo/combinedImage';
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
 isVisWithOrig = 1;
+isVisWithArtery = 1;
 
 for i = 1
     idName = videoName{i}(7 : end - 4);
@@ -146,10 +147,17 @@ for i = 1
             datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
         trackBlobsObj.saveTrackingBlobs();
     else
-        trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
-        trackBlobsObj.videoName = fullfile(resultVideoPath, ...
-            ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
-        trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);
+        if isVisWithArtery == 1
+            trackBlobsObj.playTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo, artery);
+            trackBlobsObj.videoName = fullfile(resultVideoPath, ...
+            ['video' idName '_withArtery_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
+            trackBlobsObj.saveTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo);
+        else            
+            trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
+            trackBlobsObj.videoName = fullfile(resultVideoPath, ...
+                ['video' idName '_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
+            trackBlobsObj.saveTrackingBlobsWithOrig(vt.storeOrigVideo);
+        end
     end
     
 %     trackBlobsObj.playTrackingBlobs();
