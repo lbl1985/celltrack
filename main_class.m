@@ -150,7 +150,7 @@ for i = 1
         if isVisWithArtery == 1
             trackBlobsObj.playTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo, artery);
             trackBlobsObj.videoName = fullfile(resultVideoPath, ...
-            ['video' idName '_withArtery_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
+                ['video' idName '_withArtery_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
             trackBlobsObj.saveTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo);
         else            
             trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
