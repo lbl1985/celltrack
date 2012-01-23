@@ -16,7 +16,7 @@ datapath = fullfile(workingpath, '01database', datasetName);
 [datapath videoName n] = rfdatabase(datapath, [], '.tif');
 
 % bkgd subtraction section
-for id = 3
+for id = 1
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
@@ -88,7 +88,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 [datapath videoName n] = rfdatabase(datapath, [], '.mat');
 isVisWithOrig = 1;
 
-for i = 3
+for i = 1
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
@@ -127,13 +127,18 @@ for i = 3
     % Merge by Location
     trackBlobsObj.DBMergeLocation();
     trackBlobsObj.DBMergeLocation();    
-    % TODO Dynamics    
-    trackBlobsObj.dbCleanUp();
+    % TODO Dynamics   
+    atLeastShownUpThreshold = 1;
+    trackBlobsObj.dbCleanUp(atLeastShownUpThreshold);
     % Merge by Dynamics
 %     trackBlobsObj.DBMergeDynamics();
     trackBlobsObj.DBMergeDynamics2();
     
     trackBlobsObj.DBSortByFrame();
+    
+    artery = imread(['wl_' idName '.tif']);
+    artery = imresize(uint16_2_uint8(artery), 0.25);
+    
     
     if isVisWithOrig == 0        
         trackBlobsObj.playTrackingBlobs();
