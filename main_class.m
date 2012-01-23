@@ -137,7 +137,7 @@ for i = 1
     trackBlobsObj.DBSortByFrame();
     
     artery = imread(['wl_' idName '.tif']);
-    artery = imresize(uint16_2_uint8(artery), 0.25);
+    artery = imresize(uint16_2_uint8(artery), [125 125]);
     
     
     if isVisWithOrig == 0        
