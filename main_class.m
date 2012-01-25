@@ -98,7 +98,7 @@ for i = 1
     vt.playType = 'orig'; %'mog'; %'rpca'
 %     vt.resultVideoPathCompensation = ['../../Results/' datasetName '/batchRun_object/'];
     resultVideoPath = fullfile(getProjectBaseFolder, 'Results', datasetName, ...
-        'video\');
+        'video');
     checkFolder(resultVideoPath);
 %     vt.coverNoiseCloud();
 %   vt.medianFilter();
@@ -148,10 +148,10 @@ for i = 1
         trackBlobsObj.saveTrackingBlobs();
     else
         if isVisWithArtery == 1
-            trackBlobsObj.playTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo, artery);
+%             trackBlobsObj.playTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo, artery);
             trackBlobsObj.videoName = fullfile(resultVideoPath, ...
                 ['video' idName '_withArtery_Time_' datestr(now, 'HH_MM_mmm_dd_yy') '.avi']);
-            trackBlobsObj.saveTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo);
+            trackBlobsObj.saveTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo, artery);
         else            
             trackBlobsObj.playTrackingBlobsWithOrig(vt.storeOrigVideo);        
             trackBlobsObj.videoName = fullfile(resultVideoPath, ...
