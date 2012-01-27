@@ -32,7 +32,7 @@ for id = 1 : n_video
     vt.origVideo = vt.origVideo>= bkgdThreshold;
     vt.origVideo = uint8(vt.origVideo) * 255;  
     
-    vt.nFrame = 1000;
+    vt.nFrame = size(vt.origVideo, ndims(vt.origVideo));
 %     vt.bkgd_subtraction_MoG();
  %   vt.bkgd_subtraction_rpca();
 
