@@ -29,6 +29,10 @@ for id = 1 : n_video
     vt.storeOrigVideo = vt.origVideo;
     
     vt.origVideo = bsxfun(@minus, vt.origVideo, uint8(orig_avg));
+    H = histc(double(vt.origVideo(:)), 0 : 255);
+    H_b = H/ length(vt.origVideo(:));
+    percent = sum(H_b(bkgdThreshold : end));
+    
     vt.origVideo = vt.origVideo>= bkgdThreshold;
     vt.origVideo = uint8(vt.origVideo) * 255;  
     
@@ -121,7 +125,7 @@ for i = 1 : n_var
     trackBlobsObj.DBSortByFrame();
     
     trackBlobsObj.videoName = idName;
-    trackBlobsObj.saveResultsTextFile(bkgdThreshold, atLeastShownUpThreshold, datasetName, i);
+    trackBlobsObj.saveResultsTextFile(bkgdThreshold, atLeastShownUpThreshold, datasetName, i, percent);
     
     if isShow == 1
         if isVisWithOrig == 0        
