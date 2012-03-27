@@ -14,8 +14,11 @@ function DBMergeDynamics2(obj)
             for i = 1 : length(qualifyId)
                 % Still not cover the multiple qualified conflit case
                 testIndex = qualifyId(i);
-                isLocationQualify = checkLocation(obj, targetLocation(i, :), testIndex);
-                if isLocationQualify
+                isLocationQualify = zeros(3, 1);
+                for k = 1 : length(targetLocation)
+                    isLocationQualify(k) = checkLocation(obj, targetLocation{k}(i, :), testIndex);
+                end
+                if any(isLocationQualify)
                      obj.mergeTrajectory(dbIndex, testIndex);
                      % break the seach once find one merge (for now).
                      % 11/Jan/2012
@@ -57,10 +60,20 @@ function targetLocation = propgateTraj(obj, dbIndex, timeDiff)
 % x_(n+t) = x_n + x_step * t
     inquery = obj.DB{dbIndex};
     nCandidate = length(timeDiff);
-    stepSize = (inquery.Centroid(end, :) - inquery.Centroid(1, :)) / ...
-        (length(inquery.timeIDX) - 1);
-    targetLocation = repmat(inquery.Centroid(end, :), nCandidate, 1) + ...
+    % only according to the last direction
+    stepSize = inquery.Centroid(end, :) - inquery.Centroid(end-1, :);
+%     stepSize = (inquery.Centroid(end, :) - inquery.Centroid(1, :)) / ...
+%         (length(inquery.timeIDX) - 1);
+    targetLocation = cell(3, 1);
+    % targetLocation for 0.5 * original speed
+    targetLocation{1} = repmat(inquery.Centroid(end, :), nCandidate, 1) + ...
+        repmat(0.5 * stepSize, nCandidate, 1) .* repmat(timeDiff, 1, 2);
+    % targetLocation for original speed
+    targetLocation{2} = repmat(inquery.Centroid(end, :), nCandidate, 1) + ...
         repmat(stepSize, nCandidate, 1) .* repmat(timeDiff, 1, 2);
+    % targetLocation for 1.5 * original speed
+    targetLocation{3} = repmat(inquery.Centroid(end, :), nCandidate, 1) + ...
+        repmat(2 * stepSize, nCandidate, 1) .* repmat(timeDiff, 1, 2);
 end
 
 function isLocationQualify = checkLocation(obj, targetLocation, testIndex)

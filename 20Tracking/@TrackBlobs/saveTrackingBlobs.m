@@ -22,4 +22,3 @@ saver1.fig = rectShow;
     end
     saver1.saveClose;
 end
-

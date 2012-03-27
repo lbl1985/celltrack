@@ -16,7 +16,7 @@ datapath = fullfile(workingpath, '01database', datasetName);
 [datapath videoName n] = rfdatabase(datapath, [], '.tif');
 
 % bkgd subtraction section
-for id = 1
+for id = 5
 % for id = 7    
     vt = cellCountClip(datapath, videoName{id});
     vt.resultVideoPathCompensation = fullfile('..', '..', 'Results', datasetName, 'batchRun_object');
@@ -89,7 +89,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 isVisWithOrig = 1;
 isVisWithArtery = 1;
 
-for i = 1
+for i = 3
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
@@ -145,7 +145,7 @@ for i = 1
         trackBlobsObj.playTrackingBlobs();
         trackBlobsObj.videoName = ['video' idName '_TrajOnly_Time_' ...
             datestr(now, 'HH_MM_mmm_dd_yy') '.avi'];
-        trackBlobsObj.saveTrackingBlobs();
+%         trackBlobsObj.saveTrackingBlobs();
     else
         if isVisWithArtery == 1
 %             trackBlobsObj.playTrackingBlobsWithOrigWithArtery(vt.storeOrigVideo, artery);
