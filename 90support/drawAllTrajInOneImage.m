@@ -2,6 +2,7 @@ function drawAllTrajInOneImage(trackBlobsObj, img)
 % Input:
 % trackBlobsObj: trackBlobsObjs from preocessed program
 % img:           Background(artery) image, on which to layout trajs
+% Binlong Li        27 March 2012
 
 h = figure(5);
 
