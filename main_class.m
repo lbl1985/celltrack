@@ -89,7 +89,7 @@ datapath = fullfile(baseFolder, 'Results', datasetName, 'batchRun_object');
 isVisWithOrig = 1;
 isVisWithArtery = 1;
 
-for i = 3
+for i = 2
     idName = videoName{i}(7 : end - 4);
     display([idName 'i = ' num2str(i)]);
     load(fullfile(datapath, videoName{i}));
@@ -124,7 +124,8 @@ for i = 3
 %     figure(1); playM_asVideo(trackBlobsObj.fgAfterClosing.Data);
     
     trackBlobsObj.blobTrackingFunc();
-
+    
+    display(['Before MergeLocation: ' num2str(length(trackBlobsObj.DB))]);
     % Merge by Location
     trackBlobsObj.DBMergeLocation();
     trackBlobsObj.DBMergeLocation();    
@@ -133,6 +134,7 @@ for i = 3
     trackBlobsObj.dbCleanUp(atLeastShownUpThreshold);
     % Merge by Dynamics
 %     trackBlobsObj.DBMergeDynamics();
+    display(['Before MergeDynamics: ' num2str(length(trackBlobsObj.DB))]);
     trackBlobsObj.DBMergeDynamics2();
     
     trackBlobsObj.DBSortByFrame();
@@ -140,7 +142,7 @@ for i = 3
     artery = imread(['wl_' idName '.tif']);
     artery = imresize(uint16_2_uint8(artery), [125 125]);
     
-    
+    display(['Before Vis: ' num2str(length(trackBlobsObj.DB))]);
     if isVisWithOrig == 0        
         trackBlobsObj.playTrackingBlobs();
         trackBlobsObj.videoName = ['video' idName '_TrajOnly_Time_' ...
